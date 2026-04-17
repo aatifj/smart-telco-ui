@@ -1,14 +1,22 @@
 import { useState } from "react";
 import { Layers, Check } from "lucide-react";
-import { usePersona, personaMeta, type Persona } from "@/store/persona";
+import {
+  usePersona,
+  personaMeta,
+  lifecycleMeta,
+  type Persona,
+  type Lifecycle,
+} from "@/store/persona";
 import { useNavigate } from "@tanstack/react-router";
 
 const order: Persona[] = ["safaricom", "explorer", "roaming", "diaspora", "transition"];
+const lifecycles: Lifecycle[] = ["active", "suspended", "deactivated"];
 
 export function PersonaSwitcher() {
   const [open, setOpen] = useState(false);
-  const { persona, setPersona } = usePersona();
+  const { persona, setPersona, lifecycle, setLifecycle } = usePersona();
   const navigate = useNavigate();
+  const lifecycleApplies = persona === "safaricom" || persona === "roaming";
 
   return (
     <>
@@ -62,6 +70,40 @@ export function PersonaSwitcher() {
                 );
               })}
             </ul>
+
+            {/* Lifecycle state — applies only to Persona 1 & 3 */}
+            <div className="mt-5 rounded-2xl border border-border bg-background p-3">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold">Subscriber lifecycle</p>
+                <span className="text-[10px] font-medium text-muted-foreground">
+                  {lifecycleApplies ? "Persona 1 & 3" : "N/A for this persona"}
+                </span>
+              </div>
+              <div className="mt-2 grid grid-cols-3 gap-1.5">
+                {lifecycles.map((l) => {
+                  const m = lifecycleMeta[l];
+                  const active = l === lifecycle;
+                  return (
+                    <button
+                      key={l}
+                      disabled={!lifecycleApplies}
+                      onClick={() => {
+                        setLifecycle(l);
+                        setOpen(false);
+                      }}
+                      className={`flex flex-col items-center gap-0.5 rounded-xl border px-2 py-2 text-[11px] font-semibold transition-all disabled:opacity-40 ${
+                        active && lifecycleApplies
+                          ? "border-primary bg-primary/5 text-foreground"
+                          : "border-border bg-card text-muted-foreground"
+                      }`}
+                    >
+                      <span className="text-base leading-none">{m.emoji}</span>
+                      {m.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       )}
