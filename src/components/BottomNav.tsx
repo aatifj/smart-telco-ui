@@ -19,7 +19,7 @@ export function BottomNav() {
           return (
             <li key={to}>
               <Link
-                to={to}
+                to={to as string}
                 className="group flex flex-col items-center gap-1 rounded-xl px-2 py-1.5 transition-colors"
               >
                 <span
