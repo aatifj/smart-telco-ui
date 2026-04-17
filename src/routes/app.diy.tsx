@@ -44,8 +44,51 @@ function DIYPage() {
   const [data, setData] = useState(5);
   const [voice, setVoice] = useState(60);
   const [sms, setSms] = useState(50);
+  const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
 
   const price = useMemo(() => Math.round(data * 35 + voice * 0.8 + sms * 0.3), [data, voice, sms]);
+
+  if (isRestricted) {
+    return (
+      <div className="animate-fade-in pb-6">
+        <header className="flex items-center gap-3 px-5 pt-5">
+          <Link to="/app" className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card">
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+          <div>
+            <h1 className="text-lg font-semibold">Build your combo</h1>
+            <p className="text-xs text-muted-foreground">Currently unavailable</p>
+          </div>
+        </header>
+
+        <section className="mt-6 px-5">
+          <div className={`overflow-hidden rounded-3xl border p-5 text-center shadow-soft ${
+            isDeactivated ? "border-destructive/40 bg-destructive/8" : "border-warning/40 bg-warning/10"
+          }`}>
+            <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-2xl ${
+              isDeactivated ? "bg-destructive/15 text-destructive" : "bg-warning/25 text-warning-foreground"
+            }`}>
+              {isDeactivated ? <Lock className="h-6 w-6" /> : <AlertTriangle className="h-6 w-6" />}
+            </div>
+            <p className="mt-3 text-base font-semibold">
+              {isDeactivated ? "Your line is deactivated" : "Your line is suspended"}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {isDeactivated
+                ? "Visit a Safaricom shop to reactivate before building combos."
+                : "Top up to unlock the DIY bundle builder."}
+            </p>
+            <Link
+              to="/app"
+              className="mt-5 inline-flex items-center justify-center rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow"
+            >
+              {isDeactivated ? "Find nearest shop" : isSuspended ? "Top Up Now" : "Back home"}
+            </Link>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-in pb-32">
