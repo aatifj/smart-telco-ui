@@ -1,14 +1,50 @@
 import { Link } from "@tanstack/react-router";
-import { Sparkles, Smartphone, Zap, Check, ChevronRight } from "lucide-react";
+import { Sparkles, Smartphone, Zap, Check, ChevronRight, Gift } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
+import { RewardWidget } from "@/components/RewardWidget";
+import { usePersona } from "@/store/persona";
 
 export function ExplorerHome() {
+  const reward = usePersona((s) => s.reward);
+
   return (
     <div className="animate-fade-in">
       <AppHeader greeting="Welcome" />
 
+      {/* Reward conversion entry — banner before claim, locked widget after */}
+      {reward ? (
+        <RewardWidget />
+      ) : (
+        <section className="px-5">
+          <Link
+            to="/app/reward"
+            className="relative block overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-warning-foreground/80 p-5 text-primary-foreground shadow-elevated"
+          >
+            <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-warning/40 blur-2xl" />
+            <div className="relative flex items-start gap-3">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 backdrop-blur">
+                <Gift className="h-6 w-6" />
+              </div>
+              <div className="flex-1">
+                <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider backdrop-blur">
+                  <Sparkles className="h-3 w-3" /> Free welcome bundle
+                </span>
+                <p className="mt-1.5 text-lg font-semibold leading-tight">
+                  Try Safaricom – Get a Free Data Bundle
+                </p>
+                <p className="mt-0.5 text-xs text-white/80">5 GB + 20 minutes reserved for you</p>
+              </div>
+            </div>
+            <div className="relative mt-4 flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-primary">
+              <span className="text-sm font-semibold">Unlock Your Reward</span>
+              <ChevronRight className="h-4 w-4" />
+            </div>
+          </Link>
+        </section>
+      )}
+
       {/* Hero */}
-      <section className="px-5">
+      <section className="mt-5 px-5">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-hero p-6 text-primary-foreground shadow-elevated">
           <div className="absolute -right-12 -top-12 h-44 w-44 rounded-full bg-primary-glow/30 blur-2xl" />
           <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider backdrop-blur">

@@ -17,11 +17,13 @@ import { Route as AppSimRouteImport } from './routes/app.sim'
 import { Route as AppServicesRouteImport } from './routes/app.services'
 import { Route as AppSearchRouteImport } from './routes/app.search'
 import { Route as AppRoamingRouteImport } from './routes/app.roaming'
+import { Route as AppRewardRouteImport } from './routes/app.reward'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
 import { Route as AppGiftRouteImport } from './routes/app.gift'
 import { Route as AppDiyRouteImport } from './routes/app.diy'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
+import { Route as AppRewardSuccessRouteImport } from './routes/app.reward.success'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -63,6 +65,11 @@ const AppRoamingRoute = AppRoamingRouteImport.update({
   path: '/roaming',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRewardRoute = AppRewardRouteImport.update({
+  id: '/reward',
+  path: '/reward',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -88,6 +95,11 @@ const AppBundlesRoute = AppBundlesRouteImport.update({
   path: '/bundles',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRewardSuccessRoute = AppRewardSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => AppRewardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -97,12 +109,14 @@ export interface FileRoutesByFullPath {
   '/app/gift': typeof AppGiftRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
+  '/app/reward': typeof AppRewardRouteWithChildren
   '/app/roaming': typeof AppRoamingRoute
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/reward/success': typeof AppRewardSuccessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -111,12 +125,14 @@ export interface FileRoutesByTo {
   '/app/gift': typeof AppGiftRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
+  '/app/reward': typeof AppRewardRouteWithChildren
   '/app/roaming': typeof AppRoamingRoute
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
+  '/app/reward/success': typeof AppRewardSuccessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -127,12 +143,14 @@ export interface FileRoutesById {
   '/app/gift': typeof AppGiftRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
+  '/app/reward': typeof AppRewardRouteWithChildren
   '/app/roaming': typeof AppRoamingRoute
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/reward/success': typeof AppRewardSuccessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -144,12 +162,14 @@ export interface FileRouteTypes {
     | '/app/gift'
     | '/app/notifications'
     | '/app/profile'
+    | '/app/reward'
     | '/app/roaming'
     | '/app/search'
     | '/app/services'
     | '/app/sim'
     | '/app/support'
     | '/app/'
+    | '/app/reward/success'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -158,12 +178,14 @@ export interface FileRouteTypes {
     | '/app/gift'
     | '/app/notifications'
     | '/app/profile'
+    | '/app/reward'
     | '/app/roaming'
     | '/app/search'
     | '/app/services'
     | '/app/sim'
     | '/app/support'
     | '/app'
+    | '/app/reward/success'
   id:
     | '__root__'
     | '/'
@@ -173,12 +195,14 @@ export interface FileRouteTypes {
     | '/app/gift'
     | '/app/notifications'
     | '/app/profile'
+    | '/app/reward'
     | '/app/roaming'
     | '/app/search'
     | '/app/services'
     | '/app/sim'
     | '/app/support'
     | '/app/'
+    | '/app/reward/success'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -244,6 +268,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRoamingRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/reward': {
+      id: '/app/reward'
+      path: '/reward'
+      fullPath: '/app/reward'
+      preLoaderRoute: typeof AppRewardRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/profile': {
       id: '/app/profile'
       path: '/profile'
@@ -279,8 +310,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppBundlesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/reward/success': {
+      id: '/app/reward/success'
+      path: '/success'
+      fullPath: '/app/reward/success'
+      preLoaderRoute: typeof AppRewardSuccessRouteImport
+      parentRoute: typeof AppRewardRoute
+    }
   }
 }
+
+interface AppRewardRouteChildren {
+  AppRewardSuccessRoute: typeof AppRewardSuccessRoute
+}
+
+const AppRewardRouteChildren: AppRewardRouteChildren = {
+  AppRewardSuccessRoute: AppRewardSuccessRoute,
+}
+
+const AppRewardRouteWithChildren = AppRewardRoute._addFileChildren(
+  AppRewardRouteChildren,
+)
 
 interface AppRouteChildren {
   AppBundlesRoute: typeof AppBundlesRoute
@@ -288,6 +338,7 @@ interface AppRouteChildren {
   AppGiftRoute: typeof AppGiftRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppProfileRoute: typeof AppProfileRoute
+  AppRewardRoute: typeof AppRewardRouteWithChildren
   AppRoamingRoute: typeof AppRoamingRoute
   AppSearchRoute: typeof AppSearchRoute
   AppServicesRoute: typeof AppServicesRoute
@@ -302,6 +353,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppGiftRoute: AppGiftRoute,
   AppNotificationsRoute: AppNotificationsRoute,
   AppProfileRoute: AppProfileRoute,
+  AppRewardRoute: AppRewardRouteWithChildren,
   AppRoamingRoute: AppRoamingRoute,
   AppSearchRoute: AppSearchRoute,
   AppServicesRoute: AppServicesRoute,
