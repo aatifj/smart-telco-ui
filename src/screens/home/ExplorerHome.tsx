@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Sparkles, Smartphone, Zap, Check, ChevronRight, Gift } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { RewardWidget } from "@/components/RewardWidget";
+import { PlayWinCard } from "@/components/PlayWinCard";
 import { usePersona } from "@/store/persona";
 
 export function ExplorerHome() {
@@ -42,6 +43,11 @@ export function ExplorerHome() {
           </Link>
         </section>
       )}
+
+      {/* Play & Win — trivia entry that drives conversion */}
+      <div className="mt-5">
+        <PlayWinCard />
+      </div>
 
       {/* Hero */}
       <section className="mt-5 px-5">

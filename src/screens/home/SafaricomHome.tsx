@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
+import { PlayWinCard } from "@/components/PlayWinCard";
 import { useLifecycleGuard } from "@/store/persona";
 
 const quickActions = [
@@ -163,6 +164,11 @@ export function SafaricomHome() {
           ))}
         </div>
       </section>
+
+      {/* Play & Win */}
+      <div className="mt-6">
+        <PlayWinCard />
+      </div>
 
       {/* DIY teaser */}
       <section className="mt-6 px-5">
