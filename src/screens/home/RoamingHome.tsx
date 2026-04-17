@@ -53,7 +53,13 @@ export function RoamingHome() {
             </div>
 
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <button className="rounded-xl bg-white px-3 py-2.5 text-xs font-semibold text-info">Buy roaming pack</button>
+              <button
+                disabled={blockPurchase}
+                className="flex items-center justify-center gap-1.5 rounded-xl bg-white px-3 py-2.5 text-xs font-semibold text-info disabled:opacity-55"
+              >
+                {blockPurchase && <Lock className="h-3 w-3" />}
+                Buy roaming pack
+              </button>
               <button className="rounded-xl bg-white/15 px-3 py-2.5 text-xs font-semibold text-white backdrop-blur">Check rates</button>
             </div>
           </div>
@@ -95,7 +101,7 @@ export function RoamingHome() {
         </div>
         <div className="mt-3 space-y-2">
           {roamingBundles.map((b, i) => (
-            <div key={b.n} className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3.5 shadow-soft">
+            <div key={b.n} className={`flex items-center gap-3 rounded-2xl border border-border bg-card p-3.5 shadow-soft ${blockPurchase ? "opacity-60" : ""}`}>
               <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${i === 3 ? "bg-gradient-roaming text-primary-foreground" : "bg-secondary"} text-lg`}>
                 {i === 3 ? <Plane className="h-5 w-5" /> : b.c.split(" ")[0]}
               </div>
@@ -105,7 +111,13 @@ export function RoamingHome() {
               </div>
               <div className="text-right">
                 <p className="text-sm font-bold">{b.p}</p>
-                <button className="mt-0.5 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground">Activate</button>
+                <button
+                  disabled={blockPurchase}
+                  className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground disabled:bg-muted disabled:text-muted-foreground"
+                >
+                  {blockPurchase && <Lock className="h-3 w-3" />}
+                  {blockPurchase ? "Locked" : "Activate"}
+                </button>
               </div>
             </div>
           ))}
