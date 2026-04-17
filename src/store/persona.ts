@@ -54,12 +54,24 @@ export const lifecycleMeta: Record<
   deactivated: { label: "Deactivated", emoji: "🔴", tone: "text-destructive" },
 };
 
+export interface RewardLead {
+  ethioNumber: string;
+  fullName: string;
+  email: string;
+  claimedAt: number; // epoch ms
+  validForDays: number;
+  bundle: { dataGb: number; voiceMin: number };
+}
+
 interface PersonaState {
   persona: Persona | null;
   lifecycle: Lifecycle;
   isAuthed: boolean;
+  reward: RewardLead | null;
   setPersona: (p: Persona) => void;
   setLifecycle: (l: Lifecycle) => void;
+  claimReward: (lead: Omit<RewardLead, "claimedAt" | "validForDays" | "bundle">) => void;
+  clearReward: () => void;
   logout: () => void;
 }
 
@@ -67,9 +79,20 @@ export const usePersona = create<PersonaState>((set) => ({
   persona: null,
   lifecycle: "active",
   isAuthed: false,
+  reward: null,
   setPersona: (p) => set({ persona: p, isAuthed: true }),
   setLifecycle: (l) => set({ lifecycle: l }),
-  logout: () => set({ persona: null, isAuthed: false, lifecycle: "active" }),
+  claimReward: (lead) =>
+    set({
+      reward: {
+        ...lead,
+        claimedAt: Date.now(),
+        validForDays: 7,
+        bundle: { dataGb: 5, voiceMin: 20 },
+      },
+    }),
+  clearReward: () => set({ reward: null }),
+  logout: () => set({ persona: null, isAuthed: false, lifecycle: "active", reward: null }),
 }));
 
 /** Lifecycle restrictions only apply to Persona 1 (safaricom) and Persona 3 (roaming). */
