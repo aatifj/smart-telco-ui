@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Plus, Lock as Lock } from "lucide-react";
+import { useLifecycleGuard } from "@/store/persona";
+import { LifecycleBanner } from "@/components/LifecycleBanner";
 
 export const Route = createFileRoute("/app/bundles")({
   component: BundlesPage,
@@ -16,6 +18,7 @@ const bundles = [
 
 function BundlesPage() {
   const [active, setActive] = useState(0);
+  const { isRestricted } = useLifecycleGuard();
   return (
     <div className="animate-fade-in pb-6">
       <header className="flex items-center gap-3 px-5 pt-5">
