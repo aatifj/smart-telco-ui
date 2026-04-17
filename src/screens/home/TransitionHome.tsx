@@ -1,6 +1,7 @@
 import { Package, Truck, CheckCircle2, Lock, ChevronRight } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { Link } from "@tanstack/react-router";
+import { RewardWidget } from "@/components/RewardWidget";
 
 const steps = [
   { i: Package, l: "Ordered", d: "Apr 14", done: true },
@@ -12,6 +13,8 @@ export function TransitionHome() {
   return (
     <div className="animate-fade-in">
       <AppHeader greeting="Almost there" />
+
+      <RewardWidget />
 
       {/* Hero status */}
       <section className="px-5">
