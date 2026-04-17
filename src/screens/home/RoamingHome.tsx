@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Globe, AlertCircle, Plane, ChevronRight } from "lucide-react";
+import { Globe, AlertCircle, Plane, ChevronRight, Lock as LockIcon } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
+import { LifecycleBanner } from "@/components/LifecycleBanner";
+import { useLifecycleGuard } from "@/store/persona";
 
 const roamingBundles = [
   { n: "Daily Roam 500 MB", c: "🇰🇪 Kenya", p: "ETB 299", tag: "1 day" },
@@ -10,9 +12,14 @@ const roamingBundles = [
 ];
 
 export function RoamingHome() {
+  const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
+  const blockPurchase = isRestricted;
+
   return (
     <div className="animate-fade-in">
-      <AppHeader greeting="Roaming detected" />
+      <AppHeader greeting={isDeactivated ? "Line deactivated" : isSuspended ? "Line suspended" : "Roaming detected"} />
+
+      <LifecycleBanner />
 
       {/* Roaming alert */}
       <section className="px-5">
