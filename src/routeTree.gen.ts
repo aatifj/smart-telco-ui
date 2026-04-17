@@ -12,6 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSupportRouteImport } from './routes/app.support'
+import { Route as AppSimRouteImport } from './routes/app.sim'
+import { Route as AppServicesRouteImport } from './routes/app.services'
+import { Route as AppSearchRouteImport } from './routes/app.search'
+import { Route as AppRoamingRouteImport } from './routes/app.roaming'
+import { Route as AppProfileRouteImport } from './routes/app.profile'
+import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
+import { Route as AppGiftRouteImport } from './routes/app.gift'
+import { Route as AppDiyRouteImport } from './routes/app.diy'
+import { Route as AppBundlesRouteImport } from './routes/app.bundles'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -28,28 +38,147 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSupportRoute = AppSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSimRoute = AppSimRouteImport.update({
+  id: '/sim',
+  path: '/sim',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppServicesRoute = AppServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSearchRoute = AppSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRoamingRoute = AppRoamingRouteImport.update({
+  id: '/roaming',
+  path: '/roaming',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGiftRoute = AppGiftRouteImport.update({
+  id: '/gift',
+  path: '/gift',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDiyRoute = AppDiyRouteImport.update({
+  id: '/diy',
+  path: '/diy',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBundlesRoute = AppBundlesRouteImport.update({
+  id: '/bundles',
+  path: '/bundles',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/bundles': typeof AppBundlesRoute
+  '/app/diy': typeof AppDiyRoute
+  '/app/gift': typeof AppGiftRoute
+  '/app/notifications': typeof AppNotificationsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/roaming': typeof AppRoamingRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/services': typeof AppServicesRoute
+  '/app/sim': typeof AppSimRoute
+  '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/bundles': typeof AppBundlesRoute
+  '/app/diy': typeof AppDiyRoute
+  '/app/gift': typeof AppGiftRoute
+  '/app/notifications': typeof AppNotificationsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/roaming': typeof AppRoamingRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/services': typeof AppServicesRoute
+  '/app/sim': typeof AppSimRoute
+  '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/bundles': typeof AppBundlesRoute
+  '/app/diy': typeof AppDiyRoute
+  '/app/gift': typeof AppGiftRoute
+  '/app/notifications': typeof AppNotificationsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/roaming': typeof AppRoamingRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/services': typeof AppServicesRoute
+  '/app/sim': typeof AppSimRoute
+  '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/app/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/app/bundles'
+    | '/app/diy'
+    | '/app/gift'
+    | '/app/notifications'
+    | '/app/profile'
+    | '/app/roaming'
+    | '/app/search'
+    | '/app/services'
+    | '/app/sim'
+    | '/app/support'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app'
-  id: '__root__' | '/' | '/app' | '/app/'
+  to:
+    | '/'
+    | '/app/bundles'
+    | '/app/diy'
+    | '/app/gift'
+    | '/app/notifications'
+    | '/app/profile'
+    | '/app/roaming'
+    | '/app/search'
+    | '/app/services'
+    | '/app/sim'
+    | '/app/support'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/bundles'
+    | '/app/diy'
+    | '/app/gift'
+    | '/app/notifications'
+    | '/app/profile'
+    | '/app/roaming'
+    | '/app/search'
+    | '/app/services'
+    | '/app/sim'
+    | '/app/support'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +209,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/support': {
+      id: '/app/support'
+      path: '/support'
+      fullPath: '/app/support'
+      preLoaderRoute: typeof AppSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/sim': {
+      id: '/app/sim'
+      path: '/sim'
+      fullPath: '/app/sim'
+      preLoaderRoute: typeof AppSimRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/services': {
+      id: '/app/services'
+      path: '/services'
+      fullPath: '/app/services'
+      preLoaderRoute: typeof AppServicesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/search': {
+      id: '/app/search'
+      path: '/search'
+      fullPath: '/app/search'
+      preLoaderRoute: typeof AppSearchRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/roaming': {
+      id: '/app/roaming'
+      path: '/roaming'
+      fullPath: '/app/roaming'
+      preLoaderRoute: typeof AppRoamingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/notifications': {
+      id: '/app/notifications'
+      path: '/notifications'
+      fullPath: '/app/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/gift': {
+      id: '/app/gift'
+      path: '/gift'
+      fullPath: '/app/gift'
+      preLoaderRoute: typeof AppGiftRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/diy': {
+      id: '/app/diy'
+      path: '/diy'
+      fullPath: '/app/diy'
+      preLoaderRoute: typeof AppDiyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/bundles': {
+      id: '/app/bundles'
+      path: '/bundles'
+      fullPath: '/app/bundles'
+      preLoaderRoute: typeof AppBundlesRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppBundlesRoute: typeof AppBundlesRoute
+  AppDiyRoute: typeof AppDiyRoute
+  AppGiftRoute: typeof AppGiftRoute
+  AppNotificationsRoute: typeof AppNotificationsRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppRoamingRoute: typeof AppRoamingRoute
+  AppSearchRoute: typeof AppSearchRoute
+  AppServicesRoute: typeof AppServicesRoute
+  AppSimRoute: typeof AppSimRoute
+  AppSupportRoute: typeof AppSupportRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppBundlesRoute: AppBundlesRoute,
+  AppDiyRoute: AppDiyRoute,
+  AppGiftRoute: AppGiftRoute,
+  AppNotificationsRoute: AppNotificationsRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppRoamingRoute: AppRoamingRoute,
+  AppSearchRoute: AppSearchRoute,
+  AppServicesRoute: AppServicesRoute,
+  AppSimRoute: AppSimRoute,
+  AppSupportRoute: AppSupportRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
