@@ -7,6 +7,8 @@ export type Persona =
   | "diaspora" // Persona 4
   | "transition"; // Persona 5
 
+export type Lifecycle = "active" | "suspended" | "deactivated";
+
 export const personaMeta: Record<
   Persona,
   { label: string; tag: string; emoji: string; gradient: string }
@@ -43,16 +45,42 @@ export const personaMeta: Record<
   },
 };
 
+export const lifecycleMeta: Record<
+  Lifecycle,
+  { label: string; emoji: string; tone: string }
+> = {
+  active: { label: "Active", emoji: "🟢", tone: "text-success" },
+  suspended: { label: "Suspended", emoji: "🟡", tone: "text-warning-foreground" },
+  deactivated: { label: "Deactivated", emoji: "🔴", tone: "text-destructive" },
+};
+
 interface PersonaState {
   persona: Persona | null;
+  lifecycle: Lifecycle;
   isAuthed: boolean;
   setPersona: (p: Persona) => void;
+  setLifecycle: (l: Lifecycle) => void;
   logout: () => void;
 }
 
 export const usePersona = create<PersonaState>((set) => ({
   persona: null,
+  lifecycle: "active",
   isAuthed: false,
   setPersona: (p) => set({ persona: p, isAuthed: true }),
-  logout: () => set({ persona: null, isAuthed: false }),
+  setLifecycle: (l) => set({ lifecycle: l }),
+  logout: () => set({ persona: null, isAuthed: false, lifecycle: "active" }),
 }));
+
+/** Lifecycle restrictions only apply to Persona 1 (safaricom) and Persona 3 (roaming). */
+export function useLifecycleGuard() {
+  const persona = usePersona((s) => s.persona);
+  const lifecycle = usePersona((s) => s.lifecycle);
+  const applies = persona === "safaricom" || persona === "roaming";
+  return {
+    lifecycle: applies ? lifecycle : ("active" as Lifecycle),
+    isSuspended: applies && lifecycle === "suspended",
+    isDeactivated: applies && lifecycle === "deactivated",
+    isRestricted: applies && lifecycle !== "active",
+  };
+}
