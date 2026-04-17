@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { ArrowLeft, Wifi, Phone, MessageSquare, Sparkles } from "lucide-react";
+import { ArrowLeft, Wifi, Phone, MessageSquare, Sparkles, Lock, AlertTriangle } from "lucide-react";
+import { useLifecycleGuard } from "@/store/persona";
 
 export const Route = createFileRoute("/app/diy")({
   component: DIYPage,
