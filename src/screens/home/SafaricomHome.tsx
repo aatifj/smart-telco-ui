@@ -1,15 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles,
+  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
+import { LifecycleBanner } from "@/components/LifecycleBanner";
+import { useLifecycleGuard } from "@/store/persona";
 
 const quickActions = [
-  { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles" },
-  { icon: Phone, label: "Buy Voice", color: "bg-info/10 text-info", to: "/app/bundles" },
-  { icon: MessageSquare, label: "Buy SMS", color: "bg-warning/15 text-warning-foreground", to: "/app/bundles" },
-  { icon: Send, label: "Send Airtime", color: "bg-accent text-accent-foreground", to: "/app/services" },
-  { icon: Wallet, label: "M-PESA", color: "bg-primary/10 text-primary", to: "/app/services" },
+  { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles", restrict: true },
+  { icon: Phone, label: "Buy Voice", color: "bg-info/10 text-info", to: "/app/bundles", restrict: true },
+  { icon: MessageSquare, label: "Buy SMS", color: "bg-warning/15 text-warning-foreground", to: "/app/bundles", restrict: true },
+  { icon: Send, label: "Send Airtime", color: "bg-accent text-accent-foreground", to: "/app/services", restrict: false },
+  { icon: Wallet, label: "M-PESA", color: "bg-primary/10 text-primary", to: "/app/services", restrict: false },
 ];
 
 const categories = ["Daily", "Weekly", "Monthly", "Unlimited", "Mega"];
