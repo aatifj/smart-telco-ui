@@ -22,6 +22,7 @@ import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppPlayRouteImport } from './routes/app.play'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
 import { Route as AppGiftRouteImport } from './routes/app.gift'
+import { Route as AppFamilyRouteImport } from './routes/app.family'
 import { Route as AppDiyRouteImport } from './routes/app.diy'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
 import { Route as AppRewardSuccessRouteImport } from './routes/app.reward.success'
@@ -29,6 +30,10 @@ import { Route as AppPlayWinRouteImport } from './routes/app.play.win'
 import { Route as AppPlayTriviaRouteImport } from './routes/app.play.trivia'
 import { Route as AppPlaySpinRouteImport } from './routes/app.play.spin'
 import { Route as AppPlayRewardsRouteImport } from './routes/app.play.rewards'
+import { Route as AppFamilyCreateRouteImport } from './routes/app.family.create'
+import { Route as AppFamilyAddRouteImport } from './routes/app.family.add'
+import { Route as AppFamilyMemberIdRouteImport } from './routes/app.family.$memberId'
+import { Route as AppFamilyMemberIdBuyRouteImport } from './routes/app.family.$memberId.buy'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -95,6 +100,11 @@ const AppGiftRoute = AppGiftRouteImport.update({
   path: '/gift',
   getParentRoute: () => AppRoute,
 } as any)
+const AppFamilyRoute = AppFamilyRouteImport.update({
+  id: '/family',
+  path: '/family',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDiyRoute = AppDiyRouteImport.update({
   id: '/diy',
   path: '/diy',
@@ -130,12 +140,33 @@ const AppPlayRewardsRoute = AppPlayRewardsRouteImport.update({
   path: '/rewards',
   getParentRoute: () => AppPlayRoute,
 } as any)
+const AppFamilyCreateRoute = AppFamilyCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => AppFamilyRoute,
+} as any)
+const AppFamilyAddRoute = AppFamilyAddRouteImport.update({
+  id: '/add',
+  path: '/add',
+  getParentRoute: () => AppFamilyRoute,
+} as any)
+const AppFamilyMemberIdRoute = AppFamilyMemberIdRouteImport.update({
+  id: '/$memberId',
+  path: '/$memberId',
+  getParentRoute: () => AppFamilyRoute,
+} as any)
+const AppFamilyMemberIdBuyRoute = AppFamilyMemberIdBuyRouteImport.update({
+  id: '/buy',
+  path: '/buy',
+  getParentRoute: () => AppFamilyMemberIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
+  '/app/family': typeof AppFamilyRouteWithChildren
   '/app/gift': typeof AppGiftRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
@@ -147,16 +178,21 @@ export interface FileRoutesByFullPath {
   '/app/sim': typeof AppSimRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
+  '/app/family/add': typeof AppFamilyAddRoute
+  '/app/family/create': typeof AppFamilyCreateRoute
   '/app/play/rewards': typeof AppPlayRewardsRoute
   '/app/play/spin': typeof AppPlaySpinRoute
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
+  '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
+  '/app/family': typeof AppFamilyRouteWithChildren
   '/app/gift': typeof AppGiftRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
@@ -168,11 +204,15 @@ export interface FileRoutesByTo {
   '/app/sim': typeof AppSimRoute
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
+  '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
+  '/app/family/add': typeof AppFamilyAddRoute
+  '/app/family/create': typeof AppFamilyCreateRoute
   '/app/play/rewards': typeof AppPlayRewardsRoute
   '/app/play/spin': typeof AppPlaySpinRoute
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
+  '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -180,6 +220,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
+  '/app/family': typeof AppFamilyRouteWithChildren
   '/app/gift': typeof AppGiftRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
@@ -191,11 +232,15 @@ export interface FileRoutesById {
   '/app/sim': typeof AppSimRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
+  '/app/family/add': typeof AppFamilyAddRoute
+  '/app/family/create': typeof AppFamilyCreateRoute
   '/app/play/rewards': typeof AppPlayRewardsRoute
   '/app/play/spin': typeof AppPlaySpinRoute
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
+  '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -204,6 +249,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/bundles'
     | '/app/diy'
+    | '/app/family'
     | '/app/gift'
     | '/app/notifications'
     | '/app/play'
@@ -215,16 +261,21 @@ export interface FileRouteTypes {
     | '/app/sim'
     | '/app/support'
     | '/app/'
+    | '/app/family/$memberId'
+    | '/app/family/add'
+    | '/app/family/create'
     | '/app/play/rewards'
     | '/app/play/spin'
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
+    | '/app/family/$memberId/buy'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/app/bundles'
     | '/app/diy'
+    | '/app/family'
     | '/app/gift'
     | '/app/notifications'
     | '/app/play'
@@ -236,17 +287,22 @@ export interface FileRouteTypes {
     | '/app/sim'
     | '/app/support'
     | '/app'
+    | '/app/family/$memberId'
+    | '/app/family/add'
+    | '/app/family/create'
     | '/app/play/rewards'
     | '/app/play/spin'
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
+    | '/app/family/$memberId/buy'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/app/bundles'
     | '/app/diy'
+    | '/app/family'
     | '/app/gift'
     | '/app/notifications'
     | '/app/play'
@@ -258,11 +314,15 @@ export interface FileRouteTypes {
     | '/app/sim'
     | '/app/support'
     | '/app/'
+    | '/app/family/$memberId'
+    | '/app/family/add'
+    | '/app/family/create'
     | '/app/play/rewards'
     | '/app/play/spin'
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
+    | '/app/family/$memberId/buy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -363,6 +423,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGiftRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/family': {
+      id: '/app/family'
+      path: '/family'
+      fullPath: '/app/family'
+      preLoaderRoute: typeof AppFamilyRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/diy': {
       id: '/app/diy'
       path: '/diy'
@@ -412,8 +479,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPlayRewardsRouteImport
       parentRoute: typeof AppPlayRoute
     }
+    '/app/family/create': {
+      id: '/app/family/create'
+      path: '/create'
+      fullPath: '/app/family/create'
+      preLoaderRoute: typeof AppFamilyCreateRouteImport
+      parentRoute: typeof AppFamilyRoute
+    }
+    '/app/family/add': {
+      id: '/app/family/add'
+      path: '/add'
+      fullPath: '/app/family/add'
+      preLoaderRoute: typeof AppFamilyAddRouteImport
+      parentRoute: typeof AppFamilyRoute
+    }
+    '/app/family/$memberId': {
+      id: '/app/family/$memberId'
+      path: '/$memberId'
+      fullPath: '/app/family/$memberId'
+      preLoaderRoute: typeof AppFamilyMemberIdRouteImport
+      parentRoute: typeof AppFamilyRoute
+    }
+    '/app/family/$memberId/buy': {
+      id: '/app/family/$memberId/buy'
+      path: '/buy'
+      fullPath: '/app/family/$memberId/buy'
+      preLoaderRoute: typeof AppFamilyMemberIdBuyRouteImport
+      parentRoute: typeof AppFamilyMemberIdRoute
+    }
   }
 }
+
+interface AppFamilyMemberIdRouteChildren {
+  AppFamilyMemberIdBuyRoute: typeof AppFamilyMemberIdBuyRoute
+}
+
+const AppFamilyMemberIdRouteChildren: AppFamilyMemberIdRouteChildren = {
+  AppFamilyMemberIdBuyRoute: AppFamilyMemberIdBuyRoute,
+}
+
+const AppFamilyMemberIdRouteWithChildren =
+  AppFamilyMemberIdRoute._addFileChildren(AppFamilyMemberIdRouteChildren)
+
+interface AppFamilyRouteChildren {
+  AppFamilyMemberIdRoute: typeof AppFamilyMemberIdRouteWithChildren
+  AppFamilyAddRoute: typeof AppFamilyAddRoute
+  AppFamilyCreateRoute: typeof AppFamilyCreateRoute
+}
+
+const AppFamilyRouteChildren: AppFamilyRouteChildren = {
+  AppFamilyMemberIdRoute: AppFamilyMemberIdRouteWithChildren,
+  AppFamilyAddRoute: AppFamilyAddRoute,
+  AppFamilyCreateRoute: AppFamilyCreateRoute,
+}
+
+const AppFamilyRouteWithChildren = AppFamilyRoute._addFileChildren(
+  AppFamilyRouteChildren,
+)
 
 interface AppPlayRouteChildren {
   AppPlayRewardsRoute: typeof AppPlayRewardsRoute
@@ -447,6 +569,7 @@ const AppRewardRouteWithChildren = AppRewardRoute._addFileChildren(
 interface AppRouteChildren {
   AppBundlesRoute: typeof AppBundlesRoute
   AppDiyRoute: typeof AppDiyRoute
+  AppFamilyRoute: typeof AppFamilyRouteWithChildren
   AppGiftRoute: typeof AppGiftRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppPlayRoute: typeof AppPlayRouteWithChildren
@@ -463,6 +586,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppBundlesRoute: AppBundlesRoute,
   AppDiyRoute: AppDiyRoute,
+  AppFamilyRoute: AppFamilyRouteWithChildren,
   AppGiftRoute: AppGiftRoute,
   AppNotificationsRoute: AppNotificationsRoute,
   AppPlayRoute: AppPlayRouteWithChildren,
@@ -485,12 +609,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
