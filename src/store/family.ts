@@ -23,10 +23,10 @@ const palette = [
 ];
 
 const seed: FamilyMember[] = [
-  { id: "m1", nickname: "Sara (Wife)", phone: "+251 9•• ••• 220", avatarColor: palette[0], dataUsedGb: 3.2, dataLimitGb: 5, voiceUsedMin: 42, voiceLimitMin: 100, smsUsed: 12, smsLimit: 50, lastActive: "2h ago" },
-  { id: "m2", nickname: "Ali (Son)", phone: "+251 9•• ••• 318", avatarColor: palette[1], dataUsedGb: 4.6, dataLimitGb: 5, voiceUsedMin: 18, voiceLimitMin: 60, smsUsed: 4, smsLimit: 30, lastActive: "12m ago" },
-  { id: "m3", nickname: "Fatima (Daughter)", phone: "+251 9•• ••• 904", avatarColor: palette[2], dataUsedGb: 0.8, dataLimitGb: 3, voiceUsedMin: 6, voiceLimitMin: 40, smsUsed: 0, smsLimit: 20, lastActive: "Yesterday" },
-  { id: "m4", nickname: "Dad", phone: "+251 9•• ••• 071", avatarColor: palette[3], dataUsedGb: 1.1, dataLimitGb: 4, voiceUsedMin: 88, voiceLimitMin: 120, smsUsed: 22, smsLimit: 60, lastActive: "5h ago" },
+  { id: "m1", nickname: "Sara (Wife)", phone: "+251 7•• ••• 220", avatarColor: palette[0], dataUsedGb: 3.2, dataLimitGb: 5, voiceUsedMin: 42, voiceLimitMin: 100, smsUsed: 12, smsLimit: 50, lastActive: "2h ago" },
+  { id: "m2", nickname: "Ali (Son)", phone: "+251 7•• ••• 318", avatarColor: palette[1], dataUsedGb: 4.6, dataLimitGb: 5, voiceUsedMin: 18, voiceLimitMin: 60, smsUsed: 4, smsLimit: 30, lastActive: "12m ago" },
+  { id: "m3", nickname: "Fatima (Daughter)", phone: "+251 7•• ••• 904", avatarColor: palette[2], dataUsedGb: 0.8, dataLimitGb: 3, voiceUsedMin: 6, voiceLimitMin: 40, smsUsed: 0, smsLimit: 20, lastActive: "Yesterday" },
+  { id: "m4", nickname: "Dad", phone: "+251 7•• ••• 071", avatarColor: palette[3], dataUsedGb: 1.1, dataLimitGb: 4, voiceUsedMin: 88, voiceLimitMin: 120, smsUsed: 22, smsLimit: 60, lastActive: "5h ago" },
 ];
 
 interface FamilyState {

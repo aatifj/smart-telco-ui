@@ -21,7 +21,7 @@ function GiftPage() {
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/15 text-primary font-bold">M</span>
           <div className="flex-1">
             <p className="text-sm font-semibold">Mama</p>
-            <p className="text-xs text-muted-foreground">+251 91• ••• 234</p>
+            <p className="text-xs text-muted-foreground">+251 71• ••• 234</p>
           </div>
           <button className="text-xs font-semibold text-primary">Change</button>
         </div>

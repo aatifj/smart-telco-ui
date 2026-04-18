@@ -3,10 +3,10 @@ import { AppHeader } from "@/components/AppHeader";
 import { Link } from "@tanstack/react-router";
 
 const family = [
-  { n: "Mama", p: "+251 91• ••• 234", a: "M", c: "bg-primary/15 text-primary" },
-  { n: "Dawit", p: "+251 92• ••• 119", a: "D", c: "bg-info/15 text-info" },
-  { n: "Selam", p: "+251 93• ••• 778", a: "S", c: "bg-warning/25 text-warning-foreground" },
-  { n: "Kebede", p: "+251 94• ••• 332", a: "K", c: "bg-destructive/15 text-destructive" },
+  { n: "Mama", p: "+251 71• ••• 234", a: "M", c: "bg-primary/15 text-primary" },
+  { n: "Dawit", p: "+251 72• ••• 119", a: "D", c: "bg-info/15 text-info" },
+  { n: "Selam", p: "+251 73• ••• 778", a: "S", c: "bg-warning/25 text-warning-foreground" },
+  { n: "Kebede", p: "+251 74• ••• 332", a: "K", c: "bg-destructive/15 text-destructive" },
 ];
 
 const giftBundles = [
