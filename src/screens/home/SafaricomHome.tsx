@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock,
+  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock, Users,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
@@ -163,6 +163,37 @@ export function SafaricomHome() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Family & Friends */}
+      <section className="mt-6 px-5">
+        {isDeactivated ? (
+          <div className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 p-4 opacity-70">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
+              <Lock className="h-4 w-4" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Family & Friends</p>
+              <p className="text-xs text-muted-foreground">Reactivate your SIM to manage your family.</p>
+            </div>
+          </div>
+        ) : (
+          <Link
+            to="/app/family"
+            className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-info/10 via-card to-card p-4 shadow-soft"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-info/15 text-info">
+              <Users className="h-5 w-5" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Manage Your Family</p>
+              <p className="text-xs text-muted-foreground">Share bundles, track usage, stay connected.</p>
+            </div>
+            <span className="flex items-center gap-1 rounded-full bg-info/10 px-2.5 py-1 text-[10px] font-semibold text-info">
+              4 members <ChevronRight className="h-3 w-3" />
+            </span>
+          </Link>
+        )}
       </section>
 
       {/* Play & Win */}
