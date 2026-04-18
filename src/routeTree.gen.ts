@@ -26,6 +26,7 @@ import { Route as AppGiftRouteImport } from './routes/app.gift'
 import { Route as AppFamilyRouteImport } from './routes/app.family'
 import { Route as AppDiyRouteImport } from './routes/app.diy'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
+import { Route as AppApnRouteImport } from './routes/app.apn'
 import { Route as AppRewardSuccessRouteImport } from './routes/app.reward.success'
 import { Route as AppPlayWinRouteImport } from './routes/app.play.win'
 import { Route as AppPlayTriviaRouteImport } from './routes/app.play.trivia'
@@ -121,6 +122,11 @@ const AppBundlesRoute = AppBundlesRouteImport.update({
   path: '/bundles',
   getParentRoute: () => AppRoute,
 } as any)
+const AppApnRoute = AppApnRouteImport.update({
+  id: '/apn',
+  path: '/apn',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppRewardSuccessRoute = AppRewardSuccessRouteImport.update({
   id: '/success',
   path: '/success',
@@ -170,6 +176,7 @@ const AppFamilyMemberIdBuyRoute = AppFamilyMemberIdBuyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
@@ -197,6 +204,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/app/apn'
     | '/app/bundles'
     | '/app/diy'
     | '/app/family'
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app/apn'
     | '/app/bundles'
     | '/app/diy'
     | '/app/family'
@@ -311,6 +322,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/app/apn'
     | '/app/bundles'
     | '/app/diy'
     | '/app/family'
@@ -463,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppBundlesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/apn': {
+      id: '/app/apn'
+      path: '/apn'
+      fullPath: '/app/apn'
+      preLoaderRoute: typeof AppApnRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/reward/success': {
       id: '/app/reward/success'
       path: '/success'
@@ -586,6 +605,7 @@ const AppRewardRouteWithChildren = AppRewardRoute._addFileChildren(
 )
 
 interface AppRouteChildren {
+  AppApnRoute: typeof AppApnRoute
   AppBundlesRoute: typeof AppBundlesRoute
   AppDiyRoute: typeof AppDiyRoute
   AppFamilyRoute: typeof AppFamilyRouteWithChildren
@@ -604,6 +624,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppApnRoute: AppApnRoute,
   AppBundlesRoute: AppBundlesRoute,
   AppDiyRoute: AppDiyRoute,
   AppFamilyRoute: AppFamilyRouteWithChildren,
