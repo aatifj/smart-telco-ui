@@ -13,7 +13,7 @@ const schema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^(\+?251|0)?9\d{8}$/, "Enter a valid Safaricom number"),
+    .regex(/^(\+?251|0)?7\d{8}$/, "Enter a valid Safaricom number (07XXXXXXXX)"),
 });
 
 function AddMember() {
