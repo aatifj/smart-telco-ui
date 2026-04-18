@@ -196,6 +196,39 @@ export function SafaricomHome() {
         )}
       </section>
 
+      {/* Internet settings (APN) — quick utility */}
+      <section className="mt-6 px-5">
+        {isDeactivated ? (
+          <div className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 p-4 opacity-70">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
+              <Lock className="h-4 w-4" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Fix internet settings</p>
+              <p className="text-xs text-muted-foreground">Reactivate your SIM to configure internet.</p>
+            </div>
+          </div>
+        ) : (
+          <Link
+            to="/app/apn"
+            className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-primary/8 via-card to-card p-4 shadow-soft"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-glow">
+              <Settings2 className="h-5 w-5" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Fix internet settings</p>
+              <p className="text-xs text-muted-foreground">
+                Automatically configure your device for the best experience.
+              </p>
+            </div>
+            <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary">
+              Configure <ChevronRight className="h-3 w-3" />
+            </span>
+          </Link>
+        )}
+      </section>
+
       {/* Play & Win */}
       <div className="mt-6">
         <PlayWinCard />
