@@ -13,7 +13,7 @@ const schema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^(\+?251|0)?9\d{8}$/, "Enter a valid Safaricom number"),
+    .regex(/^(\+?251|0)?7\d{8}$/, "Enter a valid Safaricom number (07XXXXXXXX)"),
 });
 
 function AddMember() {
@@ -80,7 +80,7 @@ function AddMember() {
             <input
               value={phone}
               onChange={(e) => { setPhone(e.target.value); setErrors((p) => ({ ...p, phone: undefined })); }}
-              placeholder="09•• ••• •••"
+              placeholder="07•• ••• •••"
               inputMode="tel"
               maxLength={15}
               className={`mt-1.5 w-full rounded-2xl border bg-background px-4 py-3 text-sm outline-none focus:border-primary ${errors.phone ? "border-destructive" : "border-border"}`}

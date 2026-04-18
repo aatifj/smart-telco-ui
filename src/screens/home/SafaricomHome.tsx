@@ -49,7 +49,7 @@ export function SafaricomHome() {
               </span>
             </div>
             <p className="mt-2 text-3xl font-semibold">ETB 248.50</p>
-            <p className="text-xs text-white/70">+251 9•• ••• 412</p>
+            <p className="text-xs text-white/70">+251 7•• ••• 412</p>
 
             <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
               {[

@@ -26,7 +26,7 @@ function ProfilePage() {
             </div>
             <div>
               <p className="text-base font-semibold">Abel Tesfaye</p>
-              <p className="text-xs text-white/75">+251 9•• ••• 412</p>
+              <p className="text-xs text-white/75">+251 7•• ••• 412</p>
               <span className="mt-1 inline-flex rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-semibold backdrop-blur">
                 {meta ? `${meta.emoji} ${meta.label}` : "Guest"}
               </span>
