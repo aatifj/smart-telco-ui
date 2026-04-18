@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Sparkles, Smartphone, Zap, Check, ChevronRight, Gift } from "lucide-react";
+import { Sparkles, Smartphone, Zap, Check, ChevronRight, Gift, Gauge, Signal } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { RewardWidget } from "@/components/RewardWidget";
 import { PlayWinCard } from "@/components/PlayWinCard";
@@ -43,6 +43,43 @@ export function ExplorerHome() {
           </Link>
         </section>
       )}
+
+      {/* Network speed insight — proof of network quality */}
+      <section className="mt-5 px-5">
+        <Link
+          to="/app/speed"
+          className="relative block overflow-hidden rounded-3xl border border-border bg-card p-4 shadow-soft"
+        >
+          <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-primary/10 blur-2xl" />
+          <div className="relative flex items-center gap-3">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-primary text-primary-foreground shadow-glow">
+              <Gauge className="h-6 w-6" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold leading-tight">See Safaricom speed near you</p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">
+                Experience fast and reliable internet
+              </p>
+              <div className="mt-1.5 flex items-center gap-1 text-primary">
+                {[1, 2, 3, 4].map((i) => (
+                  <span
+                    key={i}
+                    className="block w-1 rounded-full bg-primary"
+                    style={{ height: `${4 + i * 3}px` }}
+                  />
+                ))}
+                <Signal className="ml-1 h-3 w-3" />
+                <span className="ml-1 text-[10px] font-semibold uppercase tracking-wider">
+                  4G+ / 5G
+                </span>
+              </div>
+            </div>
+            <span className="flex items-center gap-1 rounded-full bg-primary px-3 py-1.5 text-[11px] font-semibold text-primary-foreground">
+              Check speed <ChevronRight className="h-3 w-3" />
+            </span>
+          </div>
+        </Link>
+      </section>
 
       {/* Play & Win — trivia entry that drives conversion */}
       <div className="mt-5">

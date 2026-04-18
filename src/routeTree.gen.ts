@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppSupportRouteImport } from './routes/app.support'
+import { Route as AppSpeedRouteImport } from './routes/app.speed'
 import { Route as AppSimRouteImport } from './routes/app.sim'
 import { Route as AppServicesRouteImport } from './routes/app.services'
 import { Route as AppSearchRouteImport } from './routes/app.search'
@@ -53,6 +54,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppSupportRoute = AppSupportRouteImport.update({
   id: '/support',
   path: '/support',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSpeedRoute = AppSpeedRouteImport.update({
+  id: '/speed',
+  path: '/speed',
   getParentRoute: () => AppRoute,
 } as any)
 const AppSimRoute = AppSimRouteImport.update({
@@ -176,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
+  '/app/speed': typeof AppSpeedRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
@@ -202,6 +209,7 @@ export interface FileRoutesByTo {
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
+  '/app/speed': typeof AppSpeedRoute
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
+  '/app/speed': typeof AppSpeedRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/app/search'
     | '/app/services'
     | '/app/sim'
+    | '/app/speed'
     | '/app/support'
     | '/app/'
     | '/app/family/$memberId'
@@ -285,6 +295,7 @@ export interface FileRouteTypes {
     | '/app/search'
     | '/app/services'
     | '/app/sim'
+    | '/app/speed'
     | '/app/support'
     | '/app'
     | '/app/family/$memberId'
@@ -312,6 +323,7 @@ export interface FileRouteTypes {
     | '/app/search'
     | '/app/services'
     | '/app/sim'
+    | '/app/speed'
     | '/app/support'
     | '/app/'
     | '/app/family/$memberId'
@@ -358,6 +370,13 @@ declare module '@tanstack/react-router' {
       path: '/support'
       fullPath: '/app/support'
       preLoaderRoute: typeof AppSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/speed': {
+      id: '/app/speed'
+      path: '/speed'
+      fullPath: '/app/speed'
+      preLoaderRoute: typeof AppSpeedRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/sim': {
@@ -579,6 +598,7 @@ interface AppRouteChildren {
   AppSearchRoute: typeof AppSearchRoute
   AppServicesRoute: typeof AppServicesRoute
   AppSimRoute: typeof AppSimRoute
+  AppSpeedRoute: typeof AppSpeedRoute
   AppSupportRoute: typeof AppSupportRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -596,6 +616,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppSearchRoute: AppSearchRoute,
   AppServicesRoute: AppServicesRoute,
   AppSimRoute: AppSimRoute,
+  AppSpeedRoute: AppSpeedRoute,
   AppSupportRoute: AppSupportRoute,
   AppIndexRoute: AppIndexRoute,
 }
