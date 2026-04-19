@@ -19,6 +19,7 @@ import { Route as AppServicesRouteImport } from './routes/app.services'
 import { Route as AppSearchRouteImport } from './routes/app.search'
 import { Route as AppRoamingRouteImport } from './routes/app.roaming'
 import { Route as AppRewardRouteImport } from './routes/app.reward'
+import { Route as AppReportRouteImport } from './routes/app.report'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppPlayRouteImport } from './routes/app.play'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
@@ -85,6 +86,11 @@ const AppRoamingRoute = AppRoamingRouteImport.update({
 const AppRewardRoute = AppRewardRouteImport.update({
   id: '/reward',
   path: '/reward',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportRoute = AppReportRouteImport.update({
+  id: '/report',
+  path: '/report',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/report': typeof AppReportRoute
   '/app/reward': typeof AppRewardRouteWithChildren
   '/app/roaming': typeof AppRoamingRoute
   '/app/search': typeof AppSearchRoute
@@ -212,6 +219,7 @@ export interface FileRoutesByTo {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/report': typeof AppReportRoute
   '/app/reward': typeof AppRewardRouteWithChildren
   '/app/roaming': typeof AppRoamingRoute
   '/app/search': typeof AppSearchRoute
@@ -242,6 +250,7 @@ export interface FileRoutesById {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/report': typeof AppReportRoute
   '/app/reward': typeof AppRewardRouteWithChildren
   '/app/roaming': typeof AppRoamingRoute
   '/app/search': typeof AppSearchRoute
@@ -273,6 +282,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/play'
     | '/app/profile'
+    | '/app/report'
     | '/app/reward'
     | '/app/roaming'
     | '/app/search'
@@ -301,6 +311,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/play'
     | '/app/profile'
+    | '/app/report'
     | '/app/reward'
     | '/app/roaming'
     | '/app/search'
@@ -330,6 +341,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/play'
     | '/app/profile'
+    | '/app/report'
     | '/app/reward'
     | '/app/roaming'
     | '/app/search'
@@ -424,6 +436,13 @@ declare module '@tanstack/react-router' {
       path: '/reward'
       fullPath: '/app/reward'
       preLoaderRoute: typeof AppRewardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/report': {
+      id: '/app/report'
+      path: '/report'
+      fullPath: '/app/report'
+      preLoaderRoute: typeof AppReportRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/profile': {
@@ -613,6 +632,7 @@ interface AppRouteChildren {
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppPlayRoute: typeof AppPlayRouteWithChildren
   AppProfileRoute: typeof AppProfileRoute
+  AppReportRoute: typeof AppReportRoute
   AppRewardRoute: typeof AppRewardRouteWithChildren
   AppRoamingRoute: typeof AppRoamingRoute
   AppSearchRoute: typeof AppSearchRoute
@@ -632,6 +652,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppNotificationsRoute: AppNotificationsRoute,
   AppPlayRoute: AppPlayRouteWithChildren,
   AppProfileRoute: AppProfileRoute,
+  AppReportRoute: AppReportRoute,
   AppRewardRoute: AppRewardRouteWithChildren,
   AppRoamingRoute: AppRoamingRoute,
   AppSearchRoute: AppSearchRoute,
@@ -651,12 +672,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
