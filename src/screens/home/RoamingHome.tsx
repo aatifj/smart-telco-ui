@@ -76,7 +76,7 @@ export function RoamingHome() {
       {/* Report roaming issue */}
       <section className="mt-4 px-5">
         <Link
-          to="/app/roaming/report"
+          to="/app/roaming-report"
           className="flex items-center gap-3 rounded-2xl border border-warning/30 bg-gradient-to-br from-warning/10 via-card to-card p-4 shadow-soft"
         >
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-warning/20 text-warning-foreground">

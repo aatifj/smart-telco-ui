@@ -7,7 +7,7 @@ import {
 import { useIssues, type IssueType } from "@/store/issues";
 import { useLifecycleGuard } from "@/store/persona";
 
-export const Route = createFileRoute("/app/roaming/report")({
+export const Route = createFileRoute("/app/roaming-report")({
   component: RoamingReportPage,
 });
 
