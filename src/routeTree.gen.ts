@@ -28,6 +28,7 @@ import { Route as AppFamilyRouteImport } from './routes/app.family'
 import { Route as AppDiyRouteImport } from './routes/app.diy'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
 import { Route as AppApnRouteImport } from './routes/app.apn'
+import { Route as AppRoamingReportRouteImport } from './routes/app.roaming.report'
 import { Route as AppRewardSuccessRouteImport } from './routes/app.reward.success'
 import { Route as AppPlayWinRouteImport } from './routes/app.play.win'
 import { Route as AppPlayTriviaRouteImport } from './routes/app.play.trivia'
@@ -133,6 +134,11 @@ const AppApnRoute = AppApnRouteImport.update({
   path: '/apn',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRoamingReportRoute = AppRoamingReportRouteImport.update({
+  id: '/report',
+  path: '/report',
+  getParentRoute: () => AppRoamingRoute,
+} as any)
 const AppRewardSuccessRoute = AppRewardSuccessRouteImport.update({
   id: '/success',
   path: '/success',
@@ -192,7 +198,7 @@ export interface FileRoutesByFullPath {
   '/app/profile': typeof AppProfileRoute
   '/app/report': typeof AppReportRoute
   '/app/reward': typeof AppRewardRouteWithChildren
-  '/app/roaming': typeof AppRoamingRoute
+  '/app/roaming': typeof AppRoamingRouteWithChildren
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
@@ -207,6 +213,7 @@ export interface FileRoutesByFullPath {
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
+  '/app/roaming/report': typeof AppRoamingReportRoute
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
 }
 export interface FileRoutesByTo {
@@ -221,7 +228,7 @@ export interface FileRoutesByTo {
   '/app/profile': typeof AppProfileRoute
   '/app/report': typeof AppReportRoute
   '/app/reward': typeof AppRewardRouteWithChildren
-  '/app/roaming': typeof AppRoamingRoute
+  '/app/roaming': typeof AppRoamingRouteWithChildren
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
@@ -236,6 +243,7 @@ export interface FileRoutesByTo {
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
+  '/app/roaming/report': typeof AppRoamingReportRoute
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
 }
 export interface FileRoutesById {
@@ -252,7 +260,7 @@ export interface FileRoutesById {
   '/app/profile': typeof AppProfileRoute
   '/app/report': typeof AppReportRoute
   '/app/reward': typeof AppRewardRouteWithChildren
-  '/app/roaming': typeof AppRoamingRoute
+  '/app/roaming': typeof AppRoamingRouteWithChildren
   '/app/search': typeof AppSearchRoute
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
@@ -267,6 +275,7 @@ export interface FileRoutesById {
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
+  '/app/roaming/report': typeof AppRoamingReportRoute
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
 }
 export interface FileRouteTypes {
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
+    | '/app/roaming/report'
     | '/app/family/$memberId/buy'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -328,6 +338,7 @@ export interface FileRouteTypes {
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
+    | '/app/roaming/report'
     | '/app/family/$memberId/buy'
   id:
     | '__root__'
@@ -358,6 +369,7 @@ export interface FileRouteTypes {
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
+    | '/app/roaming/report'
     | '/app/family/$memberId/buy'
   fileRoutesById: FileRoutesById
 }
@@ -501,6 +513,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppApnRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/roaming/report': {
+      id: '/app/roaming/report'
+      path: '/report'
+      fullPath: '/app/roaming/report'
+      preLoaderRoute: typeof AppRoamingReportRouteImport
+      parentRoute: typeof AppRoamingRoute
+    }
     '/app/reward/success': {
       id: '/app/reward/success'
       path: '/success'
@@ -623,6 +642,18 @@ const AppRewardRouteWithChildren = AppRewardRoute._addFileChildren(
   AppRewardRouteChildren,
 )
 
+interface AppRoamingRouteChildren {
+  AppRoamingReportRoute: typeof AppRoamingReportRoute
+}
+
+const AppRoamingRouteChildren: AppRoamingRouteChildren = {
+  AppRoamingReportRoute: AppRoamingReportRoute,
+}
+
+const AppRoamingRouteWithChildren = AppRoamingRoute._addFileChildren(
+  AppRoamingRouteChildren,
+)
+
 interface AppRouteChildren {
   AppApnRoute: typeof AppApnRoute
   AppBundlesRoute: typeof AppBundlesRoute
@@ -634,7 +665,7 @@ interface AppRouteChildren {
   AppProfileRoute: typeof AppProfileRoute
   AppReportRoute: typeof AppReportRoute
   AppRewardRoute: typeof AppRewardRouteWithChildren
-  AppRoamingRoute: typeof AppRoamingRoute
+  AppRoamingRoute: typeof AppRoamingRouteWithChildren
   AppSearchRoute: typeof AppSearchRoute
   AppServicesRoute: typeof AppServicesRoute
   AppSimRoute: typeof AppSimRoute
@@ -654,7 +685,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppProfileRoute: AppProfileRoute,
   AppReportRoute: AppReportRoute,
   AppRewardRoute: AppRewardRouteWithChildren,
-  AppRoamingRoute: AppRoamingRoute,
+  AppRoamingRoute: AppRoamingRouteWithChildren,
   AppSearchRoute: AppSearchRoute,
   AppServicesRoute: AppServicesRoute,
   AppSimRoute: AppSimRoute,
