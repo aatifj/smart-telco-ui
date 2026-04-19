@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock, Users, Settings2,
+  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock, Users, Settings2, AlertTriangle,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
@@ -227,6 +227,25 @@ export function SafaricomHome() {
             </span>
           </Link>
         )}
+      </section>
+
+      {/* Report a problem */}
+      <section className="mt-6 px-5">
+        <Link
+          to="/app/report"
+          className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-warning/10 via-card to-card p-4 shadow-soft"
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-warning/20 text-warning-foreground">
+            <AlertTriangle className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-semibold">Having network issues?</p>
+            <p className="text-xs text-muted-foreground">Report voice, data, or SMS problems.</p>
+          </div>
+          <span className="flex items-center gap-1 rounded-full bg-warning/15 px-2.5 py-1 text-[10px] font-semibold text-warning-foreground">
+            Report <ChevronRight className="h-3 w-3" />
+          </span>
+        </Link>
       </section>
 
       {/* Play & Win */}
