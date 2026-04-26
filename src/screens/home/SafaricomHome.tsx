@@ -248,6 +248,44 @@ export function SafaricomHome() {
         </Link>
       </section>
 
+      {/* My Bundles / Renewal */}
+      <section className="mt-6 px-5">
+        <Link
+          to="/app/my-bundles"
+          className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-card to-card p-4 shadow-soft"
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-glow">
+            <RefreshCw className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-semibold">My bundles · Weekly Pro</p>
+            <p className="text-xs text-muted-foreground">Renews in 3d · Auto-renew on</p>
+          </div>
+          <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary">
+            Renew <ChevronRight className="h-3 w-3" />
+          </span>
+        </Link>
+      </section>
+
+      {/* Fayda ID re-registration banner */}
+      <section className="mt-6 px-5">
+        <Link
+          to="/app/fayda"
+          className="flex items-center gap-3 rounded-2xl border border-success/30 bg-gradient-to-br from-success/10 via-card to-card p-4 shadow-soft"
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-success/15 text-success">
+            <ShieldCheck className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-semibold">Update your profile with Fayda ID</p>
+            <p className="text-xs text-muted-foreground">Complete re-registration to keep your account active.</p>
+          </div>
+          <span className="flex items-center gap-1 rounded-full bg-success/15 px-2.5 py-1 text-[10px] font-semibold text-success">
+            Start <ChevronRight className="h-3 w-3" />
+          </span>
+        </Link>
+      </section>
+
       {/* Play & Win */}
       <div className="mt-6">
         <PlayWinCard />
