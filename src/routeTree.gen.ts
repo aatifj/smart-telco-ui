@@ -31,6 +31,8 @@ import { Route as AppFamilyRouteImport } from './routes/app.family'
 import { Route as AppDiyRouteImport } from './routes/app.diy'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
 import { Route as AppApnRouteImport } from './routes/app.apn'
+import { Route as AppFaydaRouteImport } from './routes/app.fayda'
+import { Route as AppMyBundlesRouteImport } from './routes/app.my-bundles'
 import { Route as AppRewardSuccessRouteImport } from './routes/app.reward.success'
 import { Route as AppPlayWinRouteImport } from './routes/app.play.win'
 import { Route as AppPlayTriviaRouteImport } from './routes/app.play.trivia'
@@ -149,6 +151,16 @@ const AppBundlesRoute = AppBundlesRouteImport.update({
 const AppApnRoute = AppApnRouteImport.update({
   id: '/apn',
   path: '/apn',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFaydaRoute = AppFaydaRouteImport.update({
+  id: '/fayda',
+  path: '/fayda',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMyBundlesRoute = AppMyBundlesRouteImport.update({
+  id: '/my-bundles',
+  path: '/my-bundles',
   getParentRoute: () => AppRoute,
 } as any)
 const AppRewardSuccessRoute = AppRewardSuccessRouteImport.update({
@@ -556,6 +568,20 @@ declare module '@tanstack/react-router' {
       path: '/apn'
       fullPath: '/app/apn'
       preLoaderRoute: typeof AppApnRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/fayda': {
+      id: '/app/fayda'
+      path: '/fayda'
+      fullPath: '/app/fayda'
+      preLoaderRoute: typeof AppFaydaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/my-bundles': {
+      id: '/app/my-bundles'
+      path: '/my-bundles'
+      fullPath: '/app/my-bundles'
+      preLoaderRoute: typeof AppMyBundlesRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/reward/success': {
