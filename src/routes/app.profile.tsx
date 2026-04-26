@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ChevronRight, LogOut, User, Bell, Shield, HelpCircle, CreditCard } from "lucide-react";
+import { ChevronRight, LogOut, User, Bell, Shield, HelpCircle, CreditCard, ShieldCheck } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { usePersona, personaMeta } from "@/store/persona";
 
 export const Route = createFileRoute("/app/profile")({
@@ -33,6 +34,23 @@ function ProfilePage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Fayda ID update banner */}
+      <section className="mt-5 px-5">
+        <Link
+          to="/app/fayda"
+          className="flex items-center gap-3 rounded-2xl border border-success/30 bg-gradient-to-br from-success/10 via-card to-card p-4 shadow-soft"
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-success/15 text-success">
+            <ShieldCheck className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-semibold">Update profile with Fayda ID</p>
+            <p className="text-xs text-muted-foreground">Re-register your SIM securely with your national ID.</p>
+          </div>
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        </Link>
       </section>
 
       <section className="mt-5 px-5">

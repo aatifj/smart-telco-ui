@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Plus, Lock as Lock } from "lucide-react";
+import { ArrowLeft, Plus, Lock as Lock, RefreshCw, ChevronRight } from "lucide-react";
 import { useLifecycleGuard } from "@/store/persona";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
 
@@ -29,6 +29,22 @@ function BundlesPage() {
       </header>
 
       <LifecycleBanner />
+
+      <section className="mt-4 px-5">
+        <Link
+          to="/app/my-bundles"
+          className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-card to-card p-4 shadow-soft"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-glow">
+            <RefreshCw className="h-4 w-4" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-semibold">My bundles</p>
+            <p className="text-xs text-muted-foreground">Renew, auto-renew or change active plans</p>
+          </div>
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        </Link>
+      </section>
 
       <div className="no-scrollbar mt-5 flex gap-2 overflow-x-auto px-5">
         {cats.map((c, i) => (

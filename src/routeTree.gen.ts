@@ -24,7 +24,9 @@ import { Route as AppReportRouteImport } from './routes/app.report'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppPlayRouteImport } from './routes/app.play'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
+import { Route as AppMyBundlesRouteImport } from './routes/app.my-bundles'
 import { Route as AppGiftRouteImport } from './routes/app.gift'
+import { Route as AppFaydaRouteImport } from './routes/app.fayda'
 import { Route as AppFamilyRouteImport } from './routes/app.family'
 import { Route as AppDiyRouteImport } from './routes/app.diy'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
@@ -114,9 +116,19 @@ const AppNotificationsRoute = AppNotificationsRouteImport.update({
   path: '/notifications',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMyBundlesRoute = AppMyBundlesRouteImport.update({
+  id: '/my-bundles',
+  path: '/my-bundles',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppGiftRoute = AppGiftRouteImport.update({
   id: '/gift',
   path: '/gift',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFaydaRoute = AppFaydaRouteImport.update({
+  id: '/fayda',
+  path: '/fayda',
   getParentRoute: () => AppRoute,
 } as any)
 const AppFamilyRoute = AppFamilyRouteImport.update({
@@ -192,7 +204,9 @@ export interface FileRoutesByFullPath {
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
+  '/app/fayda': typeof AppFaydaRoute
   '/app/gift': typeof AppGiftRoute
+  '/app/my-bundles': typeof AppMyBundlesRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
   '/app/profile': typeof AppProfileRoute
@@ -222,7 +236,9 @@ export interface FileRoutesByTo {
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
+  '/app/fayda': typeof AppFaydaRoute
   '/app/gift': typeof AppGiftRoute
+  '/app/my-bundles': typeof AppMyBundlesRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
   '/app/profile': typeof AppProfileRoute
@@ -254,7 +270,9 @@ export interface FileRoutesById {
   '/app/bundles': typeof AppBundlesRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
+  '/app/fayda': typeof AppFaydaRoute
   '/app/gift': typeof AppGiftRoute
+  '/app/my-bundles': typeof AppMyBundlesRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
   '/app/profile': typeof AppProfileRoute
@@ -287,7 +305,9 @@ export interface FileRouteTypes {
     | '/app/bundles'
     | '/app/diy'
     | '/app/family'
+    | '/app/fayda'
     | '/app/gift'
+    | '/app/my-bundles'
     | '/app/notifications'
     | '/app/play'
     | '/app/profile'
@@ -317,7 +337,9 @@ export interface FileRouteTypes {
     | '/app/bundles'
     | '/app/diy'
     | '/app/family'
+    | '/app/fayda'
     | '/app/gift'
+    | '/app/my-bundles'
     | '/app/notifications'
     | '/app/play'
     | '/app/profile'
@@ -348,7 +370,9 @@ export interface FileRouteTypes {
     | '/app/bundles'
     | '/app/diy'
     | '/app/family'
+    | '/app/fayda'
     | '/app/gift'
+    | '/app/my-bundles'
     | '/app/notifications'
     | '/app/play'
     | '/app/profile'
@@ -485,11 +509,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNotificationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/my-bundles': {
+      id: '/app/my-bundles'
+      path: '/my-bundles'
+      fullPath: '/app/my-bundles'
+      preLoaderRoute: typeof AppMyBundlesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/gift': {
       id: '/app/gift'
       path: '/gift'
       fullPath: '/app/gift'
       preLoaderRoute: typeof AppGiftRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/fayda': {
+      id: '/app/fayda'
+      path: '/fayda'
+      fullPath: '/app/fayda'
+      preLoaderRoute: typeof AppFaydaRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/family': {
@@ -647,7 +685,9 @@ interface AppRouteChildren {
   AppBundlesRoute: typeof AppBundlesRoute
   AppDiyRoute: typeof AppDiyRoute
   AppFamilyRoute: typeof AppFamilyRouteWithChildren
+  AppFaydaRoute: typeof AppFaydaRoute
   AppGiftRoute: typeof AppGiftRoute
+  AppMyBundlesRoute: typeof AppMyBundlesRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppPlayRoute: typeof AppPlayRouteWithChildren
   AppProfileRoute: typeof AppProfileRoute
@@ -668,7 +708,9 @@ const AppRouteChildren: AppRouteChildren = {
   AppBundlesRoute: AppBundlesRoute,
   AppDiyRoute: AppDiyRoute,
   AppFamilyRoute: AppFamilyRouteWithChildren,
+  AppFaydaRoute: AppFaydaRoute,
   AppGiftRoute: AppGiftRoute,
+  AppMyBundlesRoute: AppMyBundlesRoute,
   AppNotificationsRoute: AppNotificationsRoute,
   AppPlayRoute: AppPlayRouteWithChildren,
   AppProfileRoute: AppProfileRoute,
@@ -693,3 +735,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
