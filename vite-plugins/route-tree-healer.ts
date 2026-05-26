@@ -54,6 +54,15 @@ export function routeTreeHealer(): Plugin {
         recursive: true,
         force: true,
       });
+      // The TanStack Router plugin only regenerates routeTree.gen.ts when a
+      // route file changes. Touch __root.tsx so it re-emits a clean tree.
+      try {
+        const root = path.join(rootDir, "src/routes/__root.tsx");
+        const now = new Date();
+        await fs.utimes(root, now, now);
+      } catch {
+        /* ignore — router plugin will catch up on next route edit */
+      }
       if (server) {
         server.ws.send({ type: "full-reload", path: "*" });
       }
