@@ -113,7 +113,7 @@ export function routeTreeHealer(): Plugin {
       void arm();
 
       s.middlewares.use((_req, _res, next) => {
-        void check("request-time scan");
+        void check("request-time scan", 1000);
         next();
       });
     },
