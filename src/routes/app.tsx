@@ -1,16 +1,9 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { BottomNav } from "@/components/BottomNav";
 import { PersonaSwitcher } from "@/components/PersonaSwitcher";
-import { usePersona } from "@/store/persona";
 
 export const Route = createFileRoute("/app")({
-  beforeLoad: () => {
-    if (typeof window !== "undefined") {
-      const isAuthed = usePersona.getState().isAuthed;
-      if (!isAuthed) throw redirect({ to: "/" });
-    }
-  },
   component: AppLayout,
 });
 

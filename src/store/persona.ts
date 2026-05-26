@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type Persona =
   | "safaricom" // Persona 1
@@ -75,25 +76,43 @@ interface PersonaState {
   logout: () => void;
 }
 
-export const usePersona = create<PersonaState>((set) => ({
-  persona: null,
-  lifecycle: "active",
-  isAuthed: false,
-  reward: null,
-  setPersona: (p) => set({ persona: p, isAuthed: true }),
-  setLifecycle: (l) => set({ lifecycle: l }),
-  claimReward: (lead) =>
-    set({
-      reward: {
-        ...lead,
-        claimedAt: Date.now(),
-        validForDays: 7,
-        bundle: { dataGb: 5, voiceMin: 20 },
-      },
+export const usePersona = create<PersonaState>()(
+  persist(
+    (set) => ({
+      persona: null,
+      lifecycle: "active",
+      isAuthed: false,
+      reward: null,
+      setPersona: (p) => set({ persona: p, isAuthed: true }),
+      setLifecycle: (l) => set({ lifecycle: l }),
+      claimReward: (lead) =>
+        set({
+          reward: {
+            ...lead,
+            claimedAt: Date.now(),
+            validForDays: 7,
+            bundle: { dataGb: 5, voiceMin: 20 },
+          },
+        }),
+      clearReward: () => set({ reward: null }),
+      logout: () =>
+        set({ persona: null, isAuthed: false, lifecycle: "active", reward: null }),
     }),
-  clearReward: () => set({ reward: null }),
-  logout: () => set({ persona: null, isAuthed: false, lifecycle: "active", reward: null }),
-}));
+    {
+      name: "persona-store",
+      storage: createJSONStorage(() =>
+        typeof window !== "undefined"
+          ? window.localStorage
+          : {
+              getItem: () => null,
+              setItem: () => {},
+              removeItem: () => {},
+            },
+      ),
+      skipHydration: false,
+    },
+  ),
+);
 
 /** Lifecycle restrictions only apply to Persona 1 (safaricom) and Persona 3 (roaming). */
 export function useLifecycleGuard() {
