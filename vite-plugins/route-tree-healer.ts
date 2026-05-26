@@ -22,6 +22,7 @@ export function routeTreeHealer(): Plugin {
   let rootDir = process.cwd();
   let server: ViteDevServer | null = null;
   let healing = false;
+  let lastCheck = 0;
 
   const findDuplicates = (src: string): string[] => {
     const seen = new Set<string>();
