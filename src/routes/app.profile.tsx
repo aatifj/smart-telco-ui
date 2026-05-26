@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ChevronRight, LogOut, User, Bell, Shield, HelpCircle, CreditCard, ShieldCheck } from "lucide-react";
+import { ChevronRight, LogOut, User, Bell, Shield, HelpCircle, CreditCard, ShieldCheck, Heart } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { usePersona, personaMeta } from "@/store/persona";
 
@@ -48,6 +48,22 @@ function ProfilePage() {
           <div className="flex-1">
             <p className="text-sm font-semibold">Update profile with Fayda ID</p>
             <p className="text-xs text-muted-foreground">Re-register your SIM securely with your national ID.</p>
+          </div>
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        </Link>
+      </section>
+
+      <section className="mt-3 px-5">
+        <Link
+          to="/app/marketplace/favorites"
+          className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft"
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+            <Heart className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-semibold">Saved stores</p>
+            <p className="text-xs text-muted-foreground">Your marketplace favorites</p>
           </div>
           <ChevronRight className="h-4 w-4 text-muted-foreground" />
         </Link>

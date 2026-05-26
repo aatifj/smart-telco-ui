@@ -25,6 +25,7 @@ import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppPlayRouteImport } from './routes/app.play'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
 import { Route as AppMyBundlesRouteImport } from './routes/app.my-bundles'
+import { Route as AppMarketplaceRouteImport } from './routes/app.marketplace'
 import { Route as AppGiftRouteImport } from './routes/app.gift'
 import { Route as AppFaydaRouteImport } from './routes/app.fayda'
 import { Route as AppFamilyRouteImport } from './routes/app.family'
@@ -36,9 +37,16 @@ import { Route as AppPlayWinRouteImport } from './routes/app.play.win'
 import { Route as AppPlayTriviaRouteImport } from './routes/app.play.trivia'
 import { Route as AppPlaySpinRouteImport } from './routes/app.play.spin'
 import { Route as AppPlayRewardsRouteImport } from './routes/app.play.rewards'
+import { Route as AppMarketplaceSearchRouteImport } from './routes/app.marketplace.search'
+import { Route as AppMarketplaceManageRouteImport } from './routes/app.marketplace.manage'
+import { Route as AppMarketplaceFavoritesRouteImport } from './routes/app.marketplace.favorites'
+import { Route as AppMarketplaceCreateRouteImport } from './routes/app.marketplace.create'
+import { Route as AppMarketplaceAddProductRouteImport } from './routes/app.marketplace.add-product'
 import { Route as AppFamilyCreateRouteImport } from './routes/app.family.create'
 import { Route as AppFamilyAddRouteImport } from './routes/app.family.add'
 import { Route as AppFamilyMemberIdRouteImport } from './routes/app.family.$memberId'
+import { Route as AppMarketplaceStoreStoreIdRouteImport } from './routes/app.marketplace.store.$storeId'
+import { Route as AppMarketplaceProductProductIdRouteImport } from './routes/app.marketplace.product.$productId'
 import { Route as AppFamilyMemberIdBuyRouteImport } from './routes/app.family.$memberId.buy'
 
 const AppRoute = AppRouteImport.update({
@@ -121,6 +129,11 @@ const AppMyBundlesRoute = AppMyBundlesRouteImport.update({
   path: '/my-bundles',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMarketplaceRoute = AppMarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppGiftRoute = AppGiftRouteImport.update({
   id: '/gift',
   path: '/gift',
@@ -176,6 +189,32 @@ const AppPlayRewardsRoute = AppPlayRewardsRouteImport.update({
   path: '/rewards',
   getParentRoute: () => AppPlayRoute,
 } as any)
+const AppMarketplaceSearchRoute = AppMarketplaceSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => AppMarketplaceRoute,
+} as any)
+const AppMarketplaceManageRoute = AppMarketplaceManageRouteImport.update({
+  id: '/manage',
+  path: '/manage',
+  getParentRoute: () => AppMarketplaceRoute,
+} as any)
+const AppMarketplaceFavoritesRoute = AppMarketplaceFavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => AppMarketplaceRoute,
+} as any)
+const AppMarketplaceCreateRoute = AppMarketplaceCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => AppMarketplaceRoute,
+} as any)
+const AppMarketplaceAddProductRoute =
+  AppMarketplaceAddProductRouteImport.update({
+    id: '/add-product',
+    path: '/add-product',
+    getParentRoute: () => AppMarketplaceRoute,
+  } as any)
 const AppFamilyCreateRoute = AppFamilyCreateRouteImport.update({
   id: '/create',
   path: '/create',
@@ -191,6 +230,18 @@ const AppFamilyMemberIdRoute = AppFamilyMemberIdRouteImport.update({
   path: '/$memberId',
   getParentRoute: () => AppFamilyRoute,
 } as any)
+const AppMarketplaceStoreStoreIdRoute =
+  AppMarketplaceStoreStoreIdRouteImport.update({
+    id: '/store/$storeId',
+    path: '/store/$storeId',
+    getParentRoute: () => AppMarketplaceRoute,
+  } as any)
+const AppMarketplaceProductProductIdRoute =
+  AppMarketplaceProductProductIdRouteImport.update({
+    id: '/product/$productId',
+    path: '/product/$productId',
+    getParentRoute: () => AppMarketplaceRoute,
+  } as any)
 const AppFamilyMemberIdBuyRoute = AppFamilyMemberIdBuyRouteImport.update({
   id: '/buy',
   path: '/buy',
@@ -206,6 +257,7 @@ export interface FileRoutesByFullPath {
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
   '/app/gift': typeof AppGiftRoute
+  '/app/marketplace': typeof AppMarketplaceRouteWithChildren
   '/app/my-bundles': typeof AppMyBundlesRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
@@ -223,12 +275,19 @@ export interface FileRoutesByFullPath {
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
+  '/app/marketplace/add-product': typeof AppMarketplaceAddProductRoute
+  '/app/marketplace/create': typeof AppMarketplaceCreateRoute
+  '/app/marketplace/favorites': typeof AppMarketplaceFavoritesRoute
+  '/app/marketplace/manage': typeof AppMarketplaceManageRoute
+  '/app/marketplace/search': typeof AppMarketplaceSearchRoute
   '/app/play/rewards': typeof AppPlayRewardsRoute
   '/app/play/spin': typeof AppPlaySpinRoute
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
+  '/app/marketplace/product/$productId': typeof AppMarketplaceProductProductIdRoute
+  '/app/marketplace/store/$storeId': typeof AppMarketplaceStoreStoreIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -238,6 +297,7 @@ export interface FileRoutesByTo {
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
   '/app/gift': typeof AppGiftRoute
+  '/app/marketplace': typeof AppMarketplaceRouteWithChildren
   '/app/my-bundles': typeof AppMyBundlesRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
@@ -255,12 +315,19 @@ export interface FileRoutesByTo {
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
+  '/app/marketplace/add-product': typeof AppMarketplaceAddProductRoute
+  '/app/marketplace/create': typeof AppMarketplaceCreateRoute
+  '/app/marketplace/favorites': typeof AppMarketplaceFavoritesRoute
+  '/app/marketplace/manage': typeof AppMarketplaceManageRoute
+  '/app/marketplace/search': typeof AppMarketplaceSearchRoute
   '/app/play/rewards': typeof AppPlayRewardsRoute
   '/app/play/spin': typeof AppPlaySpinRoute
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
+  '/app/marketplace/product/$productId': typeof AppMarketplaceProductProductIdRoute
+  '/app/marketplace/store/$storeId': typeof AppMarketplaceStoreStoreIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -272,6 +339,7 @@ export interface FileRoutesById {
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
   '/app/gift': typeof AppGiftRoute
+  '/app/marketplace': typeof AppMarketplaceRouteWithChildren
   '/app/my-bundles': typeof AppMyBundlesRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/play': typeof AppPlayRouteWithChildren
@@ -289,12 +357,19 @@ export interface FileRoutesById {
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
+  '/app/marketplace/add-product': typeof AppMarketplaceAddProductRoute
+  '/app/marketplace/create': typeof AppMarketplaceCreateRoute
+  '/app/marketplace/favorites': typeof AppMarketplaceFavoritesRoute
+  '/app/marketplace/manage': typeof AppMarketplaceManageRoute
+  '/app/marketplace/search': typeof AppMarketplaceSearchRoute
   '/app/play/rewards': typeof AppPlayRewardsRoute
   '/app/play/spin': typeof AppPlaySpinRoute
   '/app/play/trivia': typeof AppPlayTriviaRoute
   '/app/play/win': typeof AppPlayWinRoute
   '/app/reward/success': typeof AppRewardSuccessRoute
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
+  '/app/marketplace/product/$productId': typeof AppMarketplaceProductProductIdRoute
+  '/app/marketplace/store/$storeId': typeof AppMarketplaceStoreStoreIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -307,6 +382,7 @@ export interface FileRouteTypes {
     | '/app/family'
     | '/app/fayda'
     | '/app/gift'
+    | '/app/marketplace'
     | '/app/my-bundles'
     | '/app/notifications'
     | '/app/play'
@@ -324,12 +400,19 @@ export interface FileRouteTypes {
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
+    | '/app/marketplace/add-product'
+    | '/app/marketplace/create'
+    | '/app/marketplace/favorites'
+    | '/app/marketplace/manage'
+    | '/app/marketplace/search'
     | '/app/play/rewards'
     | '/app/play/spin'
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
     | '/app/family/$memberId/buy'
+    | '/app/marketplace/product/$productId'
+    | '/app/marketplace/store/$storeId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -339,6 +422,7 @@ export interface FileRouteTypes {
     | '/app/family'
     | '/app/fayda'
     | '/app/gift'
+    | '/app/marketplace'
     | '/app/my-bundles'
     | '/app/notifications'
     | '/app/play'
@@ -356,12 +440,19 @@ export interface FileRouteTypes {
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
+    | '/app/marketplace/add-product'
+    | '/app/marketplace/create'
+    | '/app/marketplace/favorites'
+    | '/app/marketplace/manage'
+    | '/app/marketplace/search'
     | '/app/play/rewards'
     | '/app/play/spin'
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
     | '/app/family/$memberId/buy'
+    | '/app/marketplace/product/$productId'
+    | '/app/marketplace/store/$storeId'
   id:
     | '__root__'
     | '/'
@@ -372,6 +463,7 @@ export interface FileRouteTypes {
     | '/app/family'
     | '/app/fayda'
     | '/app/gift'
+    | '/app/marketplace'
     | '/app/my-bundles'
     | '/app/notifications'
     | '/app/play'
@@ -389,12 +481,19 @@ export interface FileRouteTypes {
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
+    | '/app/marketplace/add-product'
+    | '/app/marketplace/create'
+    | '/app/marketplace/favorites'
+    | '/app/marketplace/manage'
+    | '/app/marketplace/search'
     | '/app/play/rewards'
     | '/app/play/spin'
     | '/app/play/trivia'
     | '/app/play/win'
     | '/app/reward/success'
     | '/app/family/$memberId/buy'
+    | '/app/marketplace/product/$productId'
+    | '/app/marketplace/store/$storeId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -516,6 +615,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMyBundlesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/marketplace': {
+      id: '/app/marketplace'
+      path: '/marketplace'
+      fullPath: '/app/marketplace'
+      preLoaderRoute: typeof AppMarketplaceRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/gift': {
       id: '/app/gift'
       path: '/gift'
@@ -593,6 +699,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPlayRewardsRouteImport
       parentRoute: typeof AppPlayRoute
     }
+    '/app/marketplace/search': {
+      id: '/app/marketplace/search'
+      path: '/search'
+      fullPath: '/app/marketplace/search'
+      preLoaderRoute: typeof AppMarketplaceSearchRouteImport
+      parentRoute: typeof AppMarketplaceRoute
+    }
+    '/app/marketplace/manage': {
+      id: '/app/marketplace/manage'
+      path: '/manage'
+      fullPath: '/app/marketplace/manage'
+      preLoaderRoute: typeof AppMarketplaceManageRouteImport
+      parentRoute: typeof AppMarketplaceRoute
+    }
+    '/app/marketplace/favorites': {
+      id: '/app/marketplace/favorites'
+      path: '/favorites'
+      fullPath: '/app/marketplace/favorites'
+      preLoaderRoute: typeof AppMarketplaceFavoritesRouteImport
+      parentRoute: typeof AppMarketplaceRoute
+    }
+    '/app/marketplace/create': {
+      id: '/app/marketplace/create'
+      path: '/create'
+      fullPath: '/app/marketplace/create'
+      preLoaderRoute: typeof AppMarketplaceCreateRouteImport
+      parentRoute: typeof AppMarketplaceRoute
+    }
+    '/app/marketplace/add-product': {
+      id: '/app/marketplace/add-product'
+      path: '/add-product'
+      fullPath: '/app/marketplace/add-product'
+      preLoaderRoute: typeof AppMarketplaceAddProductRouteImport
+      parentRoute: typeof AppMarketplaceRoute
+    }
     '/app/family/create': {
       id: '/app/family/create'
       path: '/create'
@@ -613,6 +754,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/family/$memberId'
       preLoaderRoute: typeof AppFamilyMemberIdRouteImport
       parentRoute: typeof AppFamilyRoute
+    }
+    '/app/marketplace/store/$storeId': {
+      id: '/app/marketplace/store/$storeId'
+      path: '/store/$storeId'
+      fullPath: '/app/marketplace/store/$storeId'
+      preLoaderRoute: typeof AppMarketplaceStoreStoreIdRouteImport
+      parentRoute: typeof AppMarketplaceRoute
+    }
+    '/app/marketplace/product/$productId': {
+      id: '/app/marketplace/product/$productId'
+      path: '/product/$productId'
+      fullPath: '/app/marketplace/product/$productId'
+      preLoaderRoute: typeof AppMarketplaceProductProductIdRouteImport
+      parentRoute: typeof AppMarketplaceRoute
     }
     '/app/family/$memberId/buy': {
       id: '/app/family/$memberId/buy'
@@ -651,6 +806,30 @@ const AppFamilyRouteWithChildren = AppFamilyRoute._addFileChildren(
   AppFamilyRouteChildren,
 )
 
+interface AppMarketplaceRouteChildren {
+  AppMarketplaceAddProductRoute: typeof AppMarketplaceAddProductRoute
+  AppMarketplaceCreateRoute: typeof AppMarketplaceCreateRoute
+  AppMarketplaceFavoritesRoute: typeof AppMarketplaceFavoritesRoute
+  AppMarketplaceManageRoute: typeof AppMarketplaceManageRoute
+  AppMarketplaceSearchRoute: typeof AppMarketplaceSearchRoute
+  AppMarketplaceProductProductIdRoute: typeof AppMarketplaceProductProductIdRoute
+  AppMarketplaceStoreStoreIdRoute: typeof AppMarketplaceStoreStoreIdRoute
+}
+
+const AppMarketplaceRouteChildren: AppMarketplaceRouteChildren = {
+  AppMarketplaceAddProductRoute: AppMarketplaceAddProductRoute,
+  AppMarketplaceCreateRoute: AppMarketplaceCreateRoute,
+  AppMarketplaceFavoritesRoute: AppMarketplaceFavoritesRoute,
+  AppMarketplaceManageRoute: AppMarketplaceManageRoute,
+  AppMarketplaceSearchRoute: AppMarketplaceSearchRoute,
+  AppMarketplaceProductProductIdRoute: AppMarketplaceProductProductIdRoute,
+  AppMarketplaceStoreStoreIdRoute: AppMarketplaceStoreStoreIdRoute,
+}
+
+const AppMarketplaceRouteWithChildren = AppMarketplaceRoute._addFileChildren(
+  AppMarketplaceRouteChildren,
+)
+
 interface AppPlayRouteChildren {
   AppPlayRewardsRoute: typeof AppPlayRewardsRoute
   AppPlaySpinRoute: typeof AppPlaySpinRoute
@@ -687,6 +866,7 @@ interface AppRouteChildren {
   AppFamilyRoute: typeof AppFamilyRouteWithChildren
   AppFaydaRoute: typeof AppFaydaRoute
   AppGiftRoute: typeof AppGiftRoute
+  AppMarketplaceRoute: typeof AppMarketplaceRouteWithChildren
   AppMyBundlesRoute: typeof AppMyBundlesRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppPlayRoute: typeof AppPlayRouteWithChildren
@@ -710,6 +890,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppFamilyRoute: AppFamilyRouteWithChildren,
   AppFaydaRoute: AppFaydaRoute,
   AppGiftRoute: AppGiftRoute,
+  AppMarketplaceRoute: AppMarketplaceRouteWithChildren,
   AppMyBundlesRoute: AppMyBundlesRoute,
   AppNotificationsRoute: AppNotificationsRoute,
   AppPlayRoute: AppPlayRouteWithChildren,
