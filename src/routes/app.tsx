@@ -5,12 +5,6 @@ import { PersonaSwitcher } from "@/components/PersonaSwitcher";
 import { usePersona } from "@/store/persona";
 
 export const Route = createFileRoute("/app")({
-  beforeLoad: () => {
-    if (typeof window !== "undefined") {
-      const isAuthed = usePersona.getState().isAuthed;
-      if (!isAuthed) throw redirect({ to: "/" });
-    }
-  },
   component: AppLayout,
 });
 
