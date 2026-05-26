@@ -90,10 +90,28 @@ export function routeTreeHealer(): Plugin {
     async configureServer(s) {
       server = s;
       await check("startup scan");
-      s.watcher.on("change", (file) => {
-        if (file.endsWith("routeTree.gen.ts")) {
-          void check("post-write scan");
+
+      // The TanStack Router plugin usually adds routeTree.gen.ts to chokidar's
+      // ignore list (to avoid reload loops on its own writes), so we cannot
+      // rely on Vite's watcher. Use a native fs.watch on the file directly,
+      // plus a request-time middleware as a belt-and-braces backup.
+      const abs = path.join(rootDir, ROUTE_TREE_REL);
+      const arm = async () => {
+        try {
+          const { watch } = await import("node:fs");
+          watch(abs, { persistent: false }, () => {
+            void check("fs.watch event");
+          });
+        } catch {
+          // file may not exist yet — retry shortly
+          setTimeout(() => void arm(), 500);
         }
+      };
+      void arm();
+
+      s.middlewares.use((_req, _res, next) => {
+        void check("request-time scan");
+        next();
       });
     },
   };
