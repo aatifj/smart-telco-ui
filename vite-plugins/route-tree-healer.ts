@@ -54,18 +54,22 @@ export function routeTreeHealer(): Plugin {
         recursive: true,
         force: true,
       });
-      // The TanStack Router plugin only regenerates routeTree.gen.ts when a
-      // route file's *content* changes. Append-then-revert a no-op comment
-      // on __root.tsx to force regeneration.
+      // The TanStack Router plugin regenerates routeTree.gen.ts when a route
+      // file is created or removed. Create a transient placeholder route,
+      // then immediately delete it, to force a clean regeneration.
       try {
-        const root = path.join(rootDir, "src/routes/__root.tsx");
-        const original = await fs.readFile(root, "utf8");
-        const marker = `\n// route-tree-healer:${Date.now()}\n`;
-        await fs.writeFile(root, original + marker, "utf8");
-        // Revert after a short delay so the file goes back to its real content.
+        const tick = path.join(
+          rootDir,
+          `src/routes/__healer-tick-${Date.now()}.tsx`,
+        );
+        await fs.writeFile(
+          tick,
+          "// transient file written by route-tree-healer — safe to delete\n",
+          "utf8",
+        );
         setTimeout(() => {
-          fs.writeFile(root, original, "utf8").catch(() => {});
-        }, 800);
+          fs.rm(tick, { force: true }).catch(() => {});
+        }, 600);
       } catch {
         /* ignore — router plugin will catch up on next route edit */
       }
