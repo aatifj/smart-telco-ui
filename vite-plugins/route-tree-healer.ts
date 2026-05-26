@@ -68,7 +68,9 @@ export function routeTreeHealer(): Plugin {
     }
   };
 
-  const check = async (reason: string) => {
+  const check = async (reason: string, throttleMs = 0) => {
+    if (throttleMs && Date.now() - lastCheck < throttleMs) return;
+    lastCheck = Date.now();
     const abs = path.join(rootDir, ROUTE_TREE_REL);
     let src: string;
     try {
