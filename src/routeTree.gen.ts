@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppSupportRouteImport } from './routes/app.support'
+import { Route as AppStreakRouteImport } from './routes/app.streak'
 import { Route as AppSpeedRouteImport } from './routes/app.speed'
 import { Route as AppSimRouteImport } from './routes/app.sim'
 import { Route as AppServicesRouteImport } from './routes/app.services'
@@ -70,6 +71,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppSupportRoute = AppSupportRouteImport.update({
   id: '/support',
   path: '/support',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStreakRoute = AppStreakRouteImport.update({
+  id: '/streak',
+  path: '/streak',
   getParentRoute: () => AppRoute,
 } as any)
 const AppSpeedRoute = AppSpeedRouteImport.update({
@@ -289,6 +295,7 @@ export interface FileRoutesByFullPath {
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/speed': typeof AppSpeedRoute
+  '/app/streak': typeof AppStreakRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
@@ -332,6 +339,7 @@ export interface FileRoutesByTo {
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/speed': typeof AppSpeedRoute
+  '/app/streak': typeof AppStreakRoute
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
@@ -377,6 +385,7 @@ export interface FileRoutesById {
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/speed': typeof AppSpeedRoute
+  '/app/streak': typeof AppStreakRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
@@ -423,6 +432,7 @@ export interface FileRouteTypes {
     | '/app/services'
     | '/app/sim'
     | '/app/speed'
+    | '/app/streak'
     | '/app/support'
     | '/app/'
     | '/app/chat/$peerId'
@@ -466,6 +476,7 @@ export interface FileRouteTypes {
     | '/app/services'
     | '/app/sim'
     | '/app/speed'
+    | '/app/streak'
     | '/app/support'
     | '/app'
     | '/app/chat/$peerId'
@@ -510,6 +521,7 @@ export interface FileRouteTypes {
     | '/app/services'
     | '/app/sim'
     | '/app/speed'
+    | '/app/streak'
     | '/app/support'
     | '/app/'
     | '/app/chat/$peerId'
@@ -565,6 +577,13 @@ declare module '@tanstack/react-router' {
       path: '/support'
       fullPath: '/app/support'
       preLoaderRoute: typeof AppSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/streak': {
+      id: '/app/streak'
+      path: '/streak'
+      fullPath: '/app/streak'
+      preLoaderRoute: typeof AppStreakRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/speed': {
@@ -950,6 +969,7 @@ interface AppRouteChildren {
   AppServicesRoute: typeof AppServicesRoute
   AppSimRoute: typeof AppSimRoute
   AppSpeedRoute: typeof AppSpeedRoute
+  AppStreakRoute: typeof AppStreakRoute
   AppSupportRoute: typeof AppSupportRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -975,6 +995,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppServicesRoute: AppServicesRoute,
   AppSimRoute: AppSimRoute,
   AppSpeedRoute: AppSpeedRoute,
+  AppStreakRoute: AppStreakRoute,
   AppSupportRoute: AppSupportRoute,
   AppIndexRoute: AppIndexRoute,
 }
@@ -988,12 +1009,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

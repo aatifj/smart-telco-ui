@@ -5,6 +5,7 @@ import {
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
 import { PlayWinCard } from "@/components/PlayWinCard";
+import { StreakCard } from "@/components/StreakCard";
 import { useLifecycleGuard } from "@/store/persona";
 import { useBundles } from "@/store/bundles";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
