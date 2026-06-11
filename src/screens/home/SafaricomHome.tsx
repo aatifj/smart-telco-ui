@@ -7,6 +7,8 @@ import { LifecycleBanner } from "@/components/LifecycleBanner";
 import { PlayWinCard } from "@/components/PlayWinCard";
 import { useLifecycleGuard } from "@/store/persona";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { useState, useEffect, useCallback } from "react";
+import type { CarouselApi } from "@/components/ui/carousel";
 
 const quickActions = [
   { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles", restrict: true },
