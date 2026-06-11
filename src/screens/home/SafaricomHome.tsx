@@ -7,6 +7,8 @@ import { LifecycleBanner } from "@/components/LifecycleBanner";
 import { PlayWinCard } from "@/components/PlayWinCard";
 import { useLifecycleGuard } from "@/store/persona";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { useState, useEffect, useCallback } from "react";
+import type { CarouselApi } from "@/components/ui/carousel";
 
 const quickActions = [
   { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles", restrict: true },
@@ -27,6 +29,29 @@ const featured = [
 export function SafaricomHome() {
   const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
   const blockPurchase = isRestricted;
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!api) return;
+    setCurrent(api.selectedScrollSnap());
+  }, [api]);
+
+  useEffect(() => {
+    if (!api) return;
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+    api.on("select", onSelect);
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api, onSelect]);
+
+  const balanceLabels = [
+    isDeactivated ? "Main balance · Deactivated" : isSuspended ? "Main balance · Suspended" : "Main balance · Prepaid",
+    "M-PESA Wallet · Active",
+  ];
 
   return (
     <div className="animate-fade-in">
@@ -38,6 +63,7 @@ export function SafaricomHome() {
       <section className="px-5">
         <Carousel
           opts={{ align: "start", loop: false }}
+          setApi={setApi}
           className="w-full"
         >
           <CarouselContent className="-ml-4">
@@ -132,6 +158,25 @@ export function SafaricomHome() {
             </CarouselItem>
           </CarouselContent>
         </Carousel>
+
+        {/* Pagination dots + label */}
+        <div className="mt-3 flex flex-col items-center gap-1.5">
+          <p className="text-[11px] font-medium text-muted-foreground transition-opacity duration-300">
+            {balanceLabels[current]}
+          </p>
+          <div className="flex items-center gap-1.5">
+            {Array.from({ length: count }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => api?.scrollTo(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === current ? "w-4 bg-primary" : "w-1.5 bg-muted-foreground/30"
+                }`}
+                aria-label={`Go to ${balanceLabels[i]}`}
+              />
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Quick actions */}
