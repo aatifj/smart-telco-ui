@@ -28,7 +28,10 @@ interface ChatState {
   sendMessage: (peerId: string, text: string) => void;
   markRead: (peerId: string) => void;
   ensureThread: (peerId: string) => void;
+  addPeer: (input: { name: string; phone: string; avatar?: string }) => string;
 }
+
+const avatarPool = ["🧑🏽", "👩🏽", "🧑🏾", "👩🏾", "🧑🏿", "👨🏽", "👩🏽‍🦱", "🧑🏽‍💼"];
 
 const seedPeers: ChatPeer[] = [
   { id: "p1", name: "Hanna T.", phone: "+251 7•• ••• 221", avatar: "👩🏽", online: true },
