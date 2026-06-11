@@ -49,6 +49,7 @@ import { Route as AppFamilyAddRouteImport } from './routes/app.family.add'
 import { Route as AppFamilyMemberIdRouteImport } from './routes/app.family.$memberId'
 import { Route as AppChatNewRouteImport } from './routes/app.chat.new'
 import { Route as AppChatPeerIdRouteImport } from './routes/app.chat.$peerId'
+import { Route as AppStreakClaimDaysRouteImport } from './routes/app.streak.claim.$days'
 import { Route as AppMarketplaceStoreStoreIdRouteImport } from './routes/app.marketplace.store.$storeId'
 import { Route as AppMarketplaceProductProductIdRouteImport } from './routes/app.marketplace.product.$productId'
 import { Route as AppFamilyMemberIdBuyRouteImport } from './routes/app.family.$memberId.buy'
@@ -254,6 +255,11 @@ const AppChatPeerIdRoute = AppChatPeerIdRouteImport.update({
   path: '/$peerId',
   getParentRoute: () => AppChatRoute,
 } as any)
+const AppStreakClaimDaysRoute = AppStreakClaimDaysRouteImport.update({
+  id: '/claim/$days',
+  path: '/claim/$days',
+  getParentRoute: () => AppStreakRoute,
+} as any)
 const AppMarketplaceStoreStoreIdRoute =
   AppMarketplaceStoreStoreIdRouteImport.update({
     id: '/store/$storeId',
@@ -295,7 +301,7 @@ export interface FileRoutesByFullPath {
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/speed': typeof AppSpeedRoute
-  '/app/streak': typeof AppStreakRoute
+  '/app/streak': typeof AppStreakRouteWithChildren
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
@@ -316,6 +322,7 @@ export interface FileRoutesByFullPath {
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
   '/app/marketplace/product/$productId': typeof AppMarketplaceProductProductIdRoute
   '/app/marketplace/store/$storeId': typeof AppMarketplaceStoreStoreIdRoute
+  '/app/streak/claim/$days': typeof AppStreakClaimDaysRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -339,7 +346,7 @@ export interface FileRoutesByTo {
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/speed': typeof AppSpeedRoute
-  '/app/streak': typeof AppStreakRoute
+  '/app/streak': typeof AppStreakRouteWithChildren
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
@@ -360,6 +367,7 @@ export interface FileRoutesByTo {
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
   '/app/marketplace/product/$productId': typeof AppMarketplaceProductProductIdRoute
   '/app/marketplace/store/$storeId': typeof AppMarketplaceStoreStoreIdRoute
+  '/app/streak/claim/$days': typeof AppStreakClaimDaysRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -385,7 +393,7 @@ export interface FileRoutesById {
   '/app/services': typeof AppServicesRoute
   '/app/sim': typeof AppSimRoute
   '/app/speed': typeof AppSpeedRoute
-  '/app/streak': typeof AppStreakRoute
+  '/app/streak': typeof AppStreakRouteWithChildren
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
@@ -406,6 +414,7 @@ export interface FileRoutesById {
   '/app/family/$memberId/buy': typeof AppFamilyMemberIdBuyRoute
   '/app/marketplace/product/$productId': typeof AppMarketplaceProductProductIdRoute
   '/app/marketplace/store/$storeId': typeof AppMarketplaceStoreStoreIdRoute
+  '/app/streak/claim/$days': typeof AppStreakClaimDaysRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -453,6 +462,7 @@ export interface FileRouteTypes {
     | '/app/family/$memberId/buy'
     | '/app/marketplace/product/$productId'
     | '/app/marketplace/store/$storeId'
+    | '/app/streak/claim/$days'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -497,6 +507,7 @@ export interface FileRouteTypes {
     | '/app/family/$memberId/buy'
     | '/app/marketplace/product/$productId'
     | '/app/marketplace/store/$storeId'
+    | '/app/streak/claim/$days'
   id:
     | '__root__'
     | '/'
@@ -542,6 +553,7 @@ export interface FileRouteTypes {
     | '/app/family/$memberId/buy'
     | '/app/marketplace/product/$productId'
     | '/app/marketplace/store/$storeId'
+    | '/app/streak/claim/$days'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -831,6 +843,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatPeerIdRouteImport
       parentRoute: typeof AppChatRoute
     }
+    '/app/streak/claim/$days': {
+      id: '/app/streak/claim/$days'
+      path: '/claim/$days'
+      fullPath: '/app/streak/claim/$days'
+      preLoaderRoute: typeof AppStreakClaimDaysRouteImport
+      parentRoute: typeof AppStreakRoute
+    }
     '/app/marketplace/store/$storeId': {
       id: '/app/marketplace/store/$storeId'
       path: '/store/$storeId'
@@ -948,6 +967,18 @@ const AppRewardRouteWithChildren = AppRewardRoute._addFileChildren(
   AppRewardRouteChildren,
 )
 
+interface AppStreakRouteChildren {
+  AppStreakClaimDaysRoute: typeof AppStreakClaimDaysRoute
+}
+
+const AppStreakRouteChildren: AppStreakRouteChildren = {
+  AppStreakClaimDaysRoute: AppStreakClaimDaysRoute,
+}
+
+const AppStreakRouteWithChildren = AppStreakRoute._addFileChildren(
+  AppStreakRouteChildren,
+)
+
 interface AppRouteChildren {
   AppApnRoute: typeof AppApnRoute
   AppBundlesRoute: typeof AppBundlesRoute
@@ -969,7 +1000,7 @@ interface AppRouteChildren {
   AppServicesRoute: typeof AppServicesRoute
   AppSimRoute: typeof AppSimRoute
   AppSpeedRoute: typeof AppSpeedRoute
-  AppStreakRoute: typeof AppStreakRoute
+  AppStreakRoute: typeof AppStreakRouteWithChildren
   AppSupportRoute: typeof AppSupportRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -995,7 +1026,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppServicesRoute: AppServicesRoute,
   AppSimRoute: AppSimRoute,
   AppSpeedRoute: AppSpeedRoute,
-  AppStreakRoute: AppStreakRoute,
+  AppStreakRoute: AppStreakRouteWithChildren,
   AppSupportRoute: AppSupportRoute,
   AppIndexRoute: AppIndexRoute,
 }

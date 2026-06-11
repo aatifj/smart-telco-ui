@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Flame, Check, Lock, Gift, Sparkles, Trophy, CalendarDays } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useStreak, STREAK_MILESTONES, nextMilestone, formatReward } from "@/store/streak";
-import { useGames } from "@/store/games";
 
 export const Route = createFileRoute("/app/streak")({
   component: StreakPage,
