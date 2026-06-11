@@ -207,6 +207,12 @@ export function SafaricomHome() {
         </div>
       </section>
 
+      {/* Daily streak */}
+      <section className="mt-5 px-5">
+        <StreakCard />
+      </section>
+
+
       {/* Quick actions */}
       <section className="mt-6 px-5">
         <div className="grid grid-cols-5 gap-2">
