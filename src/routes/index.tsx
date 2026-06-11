@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Phone, ArrowRight, Smartphone, ShieldCheck } from "lucide-react";
 import { usePersona, type Persona } from "@/store/persona";
 import { PhoneFrame } from "@/components/PhoneFrame";
+import { SplashScreen } from "@/components/SplashScreen";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,6 +29,7 @@ function LoginScreen() {
 
   return (
     <PhoneFrame>
+      <SplashScreen />
       <div className="relative flex min-h-screen flex-col md:min-h-[calc(100vh-3rem)]">
         {/* Hero */}
         <div className="relative overflow-hidden bg-gradient-hero px-6 pb-10 pt-12 text-primary-foreground">
