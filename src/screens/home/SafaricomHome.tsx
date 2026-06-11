@@ -34,48 +34,104 @@ export function SafaricomHome() {
 
       <LifecycleBanner />
 
-      {/* Balance card */}
+      {/* Balance carousel */}
       <section className="px-5">
-        <div className={`relative overflow-hidden rounded-3xl p-5 text-primary-foreground shadow-glow ${
-          isDeactivated ? "bg-gradient-to-br from-destructive to-destructive/70" :
-          isSuspended ? "bg-gradient-to-br from-warning-foreground/90 to-warning-foreground/70" :
-          "bg-gradient-primary"
-        }`}>
-          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
-          <div className="relative">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wider text-white/75">Main balance</p>
-              <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider">
-                Prepaid
-              </span>
-            </div>
-            <p className="mt-2 text-3xl font-semibold">ETB 248.50</p>
-            <p className="text-xs text-white/70">+251 7•• ••• 412</p>
+        <Carousel
+          opts={{ align: "start", loop: false }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-4">
+            {/* Main balance slide */}
+            <CarouselItem className="pl-4 basis-full">
+              <div className={`relative overflow-hidden rounded-3xl p-5 text-primary-foreground shadow-glow ${
+                isDeactivated ? "bg-gradient-to-br from-destructive to-destructive/70" :
+                isSuspended ? "bg-gradient-to-br from-warning-foreground/90 to-warning-foreground/70" :
+                "bg-gradient-primary"
+              }`}>
+                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+                <div className="relative">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-medium uppercase tracking-wider text-white/75">Main balance</p>
+                    <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider">
+                      Prepaid
+                    </span>
+                  </div>
+                  <p className="mt-2 text-3xl font-semibold">ETB 248.50</p>
+                  <p className="text-xs text-white/70">+251 7•• ••• 412</p>
 
-            <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
-              {[
-                { l: "Data", v: "12.4 GB", sub: "of 20 GB" },
-                { l: "Voice", v: "84 min", sub: "remaining" },
-                { l: "SMS", v: "120", sub: "remaining" },
-              ].map((b) => (
-                <div key={b.l}>
-                  <p className="text-[10px] font-medium uppercase tracking-wider text-white/65">{b.l}</p>
-                  <p className="mt-1 text-base font-semibold">{b.v}</p>
-                  <p className="text-[10px] text-white/65">{b.sub}</p>
+                  <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                    {[
+                      { l: "Data", v: "12.4 GB", sub: "of 20 GB" },
+                      { l: "Voice", v: "84 min", sub: "remaining" },
+                      { l: "SMS", v: "120", sub: "remaining" },
+                    ].map((b) => (
+                      <div key={b.l}>
+                        <p className="text-[10px] font-medium uppercase tracking-wider text-white/65">{b.l}</p>
+                        <p className="mt-1 text-base font-semibold">{b.v}</p>
+                        <p className="text-[10px] text-white/65">{b.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <Link to="/app/bundles" className="rounded-xl bg-white px-3 py-2.5 text-center text-xs font-semibold text-primary">
+                      Top up
+                    </Link>
+                    <Link to="/app/diy" className="rounded-xl bg-white/15 px-3 py-2.5 text-center text-xs font-semibold text-white backdrop-blur">
+                      Build combo
+                    </Link>
+                  </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            </CarouselItem>
 
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <Link to="/app/bundles" className="rounded-xl bg-white px-3 py-2.5 text-center text-xs font-semibold text-primary">
-                Top up
-              </Link>
-              <Link to="/app/diy" className="rounded-xl bg-white/15 px-3 py-2.5 text-center text-xs font-semibold text-white backdrop-blur">
-                Build combo
-              </Link>
-            </div>
-          </div>
-        </div>
+            {/* M-PESA balance slide */}
+            <CarouselItem className="pl-4 basis-full">
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-success to-success/80 p-5 text-success-foreground shadow-glow">
+                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+                <div className="relative">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-medium uppercase tracking-wider text-white/75">M-PESA Wallet</p>
+                    <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider">
+                      Active
+                    </span>
+                  </div>
+                  <p className="mt-2 text-3xl font-semibold">ETB 1,250.00</p>
+                  <p className="text-xs text-white/70">Available for transfers & payments</p>
+
+                  <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                    {[
+                      { l: "Sent today", v: "ETB 300", sub: "3 transactions" },
+                      { l: "Received", v: "ETB 500", sub: "2 transactions" },
+                      { l: "Cash out", v: "ETB 0", sub: "Agent visits" },
+                    ].map((b) => (
+                      <div key={b.l}>
+                        <p className="text-[10px] font-medium uppercase tracking-wider text-white/65">{b.l}</p>
+                        <p className="mt-1 text-base font-semibold">{b.v}</p>
+                        <p className="text-[10px] text-white/65">{b.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-3 grid grid-cols-3 gap-2">
+                    <Link to="/app/services" className="flex flex-col items-center justify-center gap-1 rounded-xl bg-white px-2 py-2.5 text-center text-[10px] font-semibold text-success">
+                      <ArrowRightLeft className="h-4 w-4" />
+                      Send
+                    </Link>
+                    <Link to="/app/services" className="flex flex-col items-center justify-center gap-1 rounded-xl bg-white/15 px-2 py-2.5 text-center text-[10px] font-semibold text-white backdrop-blur">
+                      <QrCode className="h-4 w-4" />
+                      Pay
+                    </Link>
+                    <Link to="/app/services" className="flex flex-col items-center justify-center gap-1 rounded-xl bg-white/15 px-2 py-2.5 text-center text-[10px] font-semibold text-white backdrop-blur">
+                      <Banknote className="h-4 w-4" />
+                      Withdraw
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
       </section>
 
       {/* Quick actions */}
