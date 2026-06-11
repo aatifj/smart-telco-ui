@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Bell, Search, MessageCircle } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { usePersona, personaMeta } from "@/store/persona";
 import safaricomLogo from "@/assets/safaricom-logo.png";
 
