@@ -28,10 +28,18 @@ const featured = [
 
 export function SafaricomHome() {
   const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
+  const { bundles } = useBundles();
   const blockPurchase = isRestricted;
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+
+  const dayMs = 1000 * 60 * 60 * 24;
+  const activeBundleCount = bundles.filter((b) => !b.expired && b.expiresAt > Date.now()).length;
+  const expiringSoon = bundles.filter(
+    (b) => !b.expired && b.expiresAt > Date.now() && b.expiresAt - Date.now() < dayMs,
+  ).length;
+
 
   const onSelect = useCallback(() => {
     if (!api) return;
