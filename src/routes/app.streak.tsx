@@ -185,12 +185,13 @@ function StreakPage() {
                     )}
                   </div>
                   {isReady && (
-                    <button
-                      onClick={() => handleClaim(m.days)}
+                    <Link
+                      to="/app/streak/claim/$days"
+                      params={{ days: String(m.days) }}
                       className="rounded-full bg-primary px-3 py-1.5 text-[11px] font-semibold text-primary-foreground shadow-soft transition-transform active:scale-95"
                     >
                       Claim
-                    </button>
+                    </Link>
                   )}
                   {isClaimed && (
                     <span className="rounded-full bg-success/15 px-2.5 py-1 text-[10px] font-semibold text-success">
