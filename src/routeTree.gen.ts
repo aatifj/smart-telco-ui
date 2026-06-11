@@ -46,6 +46,7 @@ import { Route as AppMarketplaceAddProductRouteImport } from './routes/app.marke
 import { Route as AppFamilyCreateRouteImport } from './routes/app.family.create'
 import { Route as AppFamilyAddRouteImport } from './routes/app.family.add'
 import { Route as AppFamilyMemberIdRouteImport } from './routes/app.family.$memberId'
+import { Route as AppChatPeerIdRouteImport } from './routes/app.chat.$peerId'
 import { Route as AppMarketplaceStoreStoreIdRouteImport } from './routes/app.marketplace.store.$storeId'
 import { Route as AppMarketplaceProductProductIdRouteImport } from './routes/app.marketplace.product.$productId'
 import { Route as AppFamilyMemberIdBuyRouteImport } from './routes/app.family.$memberId.buy'
@@ -236,6 +237,11 @@ const AppFamilyMemberIdRoute = AppFamilyMemberIdRouteImport.update({
   path: '/$memberId',
   getParentRoute: () => AppFamilyRoute,
 } as any)
+const AppChatPeerIdRoute = AppChatPeerIdRouteImport.update({
+  id: '/$peerId',
+  path: '/$peerId',
+  getParentRoute: () => AppChatRoute,
+} as any)
 const AppMarketplaceStoreStoreIdRoute =
   AppMarketplaceStoreStoreIdRouteImport.update({
     id: '/store/$storeId',
@@ -259,7 +265,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
-  '/app/chat': typeof AppChatRoute
+  '/app/chat': typeof AppChatRouteWithChildren
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
@@ -279,6 +285,7 @@ export interface FileRoutesByFullPath {
   '/app/speed': typeof AppSpeedRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/chat/$peerId': typeof AppChatPeerIdRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
@@ -300,7 +307,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
-  '/app/chat': typeof AppChatRoute
+  '/app/chat': typeof AppChatRouteWithChildren
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
@@ -320,6 +327,7 @@ export interface FileRoutesByTo {
   '/app/speed': typeof AppSpeedRoute
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
+  '/app/chat/$peerId': typeof AppChatPeerIdRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
@@ -343,7 +351,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
-  '/app/chat': typeof AppChatRoute
+  '/app/chat': typeof AppChatRouteWithChildren
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
@@ -363,6 +371,7 @@ export interface FileRoutesById {
   '/app/speed': typeof AppSpeedRoute
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/chat/$peerId': typeof AppChatPeerIdRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
@@ -407,6 +416,7 @@ export interface FileRouteTypes {
     | '/app/speed'
     | '/app/support'
     | '/app/'
+    | '/app/chat/$peerId'
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
@@ -448,6 +458,7 @@ export interface FileRouteTypes {
     | '/app/speed'
     | '/app/support'
     | '/app'
+    | '/app/chat/$peerId'
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
@@ -490,6 +501,7 @@ export interface FileRouteTypes {
     | '/app/speed'
     | '/app/support'
     | '/app/'
+    | '/app/chat/$peerId'
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
@@ -774,6 +786,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFamilyMemberIdRouteImport
       parentRoute: typeof AppFamilyRoute
     }
+    '/app/chat/$peerId': {
+      id: '/app/chat/$peerId'
+      path: '/$peerId'
+      fullPath: '/app/chat/$peerId'
+      preLoaderRoute: typeof AppChatPeerIdRouteImport
+      parentRoute: typeof AppChatRoute
+    }
     '/app/marketplace/store/$storeId': {
       id: '/app/marketplace/store/$storeId'
       path: '/store/$storeId'
@@ -797,6 +816,17 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AppChatRouteChildren {
+  AppChatPeerIdRoute: typeof AppChatPeerIdRoute
+}
+
+const AppChatRouteChildren: AppChatRouteChildren = {
+  AppChatPeerIdRoute: AppChatPeerIdRoute,
+}
+
+const AppChatRouteWithChildren =
+  AppChatRoute._addFileChildren(AppChatRouteChildren)
 
 interface AppFamilyMemberIdRouteChildren {
   AppFamilyMemberIdBuyRoute: typeof AppFamilyMemberIdBuyRoute
@@ -881,7 +911,7 @@ const AppRewardRouteWithChildren = AppRewardRoute._addFileChildren(
 interface AppRouteChildren {
   AppApnRoute: typeof AppApnRoute
   AppBundlesRoute: typeof AppBundlesRoute
-  AppChatRoute: typeof AppChatRoute
+  AppChatRoute: typeof AppChatRouteWithChildren
   AppDiyRoute: typeof AppDiyRoute
   AppFamilyRoute: typeof AppFamilyRouteWithChildren
   AppFaydaRoute: typeof AppFaydaRoute
@@ -906,7 +936,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppApnRoute: AppApnRoute,
   AppBundlesRoute: AppBundlesRoute,
-  AppChatRoute: AppChatRoute,
+  AppChatRoute: AppChatRouteWithChildren,
   AppDiyRoute: AppDiyRoute,
   AppFamilyRoute: AppFamilyRouteWithChildren,
   AppFaydaRoute: AppFaydaRoute,
