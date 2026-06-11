@@ -225,40 +225,6 @@ function StreakPage() {
         </div>
       </section>
 
-      {/* Celebration overlay */}
-      {celebration && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 px-6 backdrop-blur-sm animate-fade-in"
-          onClick={() => setCelebration(null)}
-        >
-          <div className="relative w-full max-w-sm overflow-hidden rounded-3xl bg-gradient-to-br from-warning via-primary to-primary/80 p-6 text-center text-primary-foreground shadow-glow">
-            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-2xl" />
-            <div className="relative">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-white/20 backdrop-blur">
-                <Gift className="h-8 w-8" />
-              </div>
-              <p className="mt-4 text-xs font-medium uppercase tracking-wider text-white/85">Reward unlocked</p>
-              <p className="mt-1 text-3xl font-bold">{formatReward(celebration.mb)}</p>
-              <p className="mt-1 text-sm text-white/85">{celebration.label}</p>
-              <p className="mt-3 text-[11px] text-white/75">Added to your Rewards wallet.</p>
-              <div className="mt-5 grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => setCelebration(null)}
-                  className="rounded-2xl bg-white/15 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur"
-                >
-                  Keep going
-                </button>
-                <Link
-                  to="/app/play/rewards"
-                  className="rounded-2xl bg-white px-4 py-2.5 text-xs font-semibold text-primary"
-                >
-                  View rewards
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
