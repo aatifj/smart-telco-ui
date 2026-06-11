@@ -99,8 +99,26 @@ export function SafaricomHome() {
                       Prepaid
                     </span>
                   </div>
-                  <p className="mt-2 text-3xl font-semibold">ETB 248.50</p>
+                  <p className="mt-2 text-3xl font-semibold">ETB {airtime.toFixed(2)}</p>
                   <p className="text-xs text-white/70">+251 7•• ••• 412</p>
+
+                  <Link
+                    to="/app/advance"
+                    className="mt-4 flex items-center justify-between rounded-2xl bg-white/10 p-3 backdrop-blur-sm transition-colors hover:bg-white/15"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15">
+                        <Coins className="h-4 w-4 text-white" />
+                      </span>
+                      <div className="text-left">
+                        <p className="text-[11px] font-medium uppercase tracking-wider text-white/65">Airtime advance</p>
+                        <p className="text-sm font-semibold">ETB {advanceAvailable.toFixed(0)} available{advanceOwed > 0 ? ` · ETB ${advanceOwed.toFixed(0)} owed` : ""}</p>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold">
+                      Get <ChevronRight className="h-3 w-3" />
+                    </span>
+                  </Link>
 
                   <Link
                     to="/app/my-bundles"
