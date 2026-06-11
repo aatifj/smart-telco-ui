@@ -14,9 +14,6 @@ function StreakPage() {
   const lastCheckIn = useStreak((s) => s.lastCheckIn);
   const claimed = useStreak((s) => s.claimedMilestones);
   const pending = useStreak((s) => s.pendingMilestones);
-  const claimMilestone = useStreak((s) => s.claimMilestone);
-  const addReward = useGames((s) => s.addReward);
-  const [celebration, setCelebration] = useState<{ label: string; mb: number } | null>(null);
 
   const next = nextMilestone(currentStreak);
   const progressToNext = next ? Math.min(100, (currentStreak / next.days) * 100) : 100;
@@ -35,19 +32,6 @@ function StreakPage() {
     }
     return days;
   }, [lastCheckIn, currentStreak]);
-
-  const handleClaim = (days: number) => {
-    const m = claimMilestone(days);
-    if (!m) return;
-    addReward({
-      kind: "data",
-      label: `${formatReward(m.dataMB)} Streak Reward`,
-      amount: m.dataMB,
-      source: "streak",
-      locked: false,
-    });
-    setCelebration({ label: m.label, mb: m.dataMB });
-  };
 
   return (
     <div className="animate-fade-in pb-12">
