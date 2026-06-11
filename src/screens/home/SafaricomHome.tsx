@@ -136,6 +136,12 @@ export function SafaricomHome() {
             <CarouselItem className="pl-4 basis-full">
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-success to-success/80 p-5 text-success-foreground shadow-glow">
                 <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+                <img
+                  src={safaricomLogo}
+                  alt="Safaricom"
+                  className="absolute right-3 top-3 h-8 w-auto object-contain opacity-30"
+                  loading="lazy"
+                />
                 <div className="relative">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-medium uppercase tracking-wider text-white/75">M-PESA Wallet</p>
