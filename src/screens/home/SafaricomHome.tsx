@@ -85,6 +85,12 @@ export function SafaricomHome() {
                 "bg-gradient-primary"
               }`}>
                 <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+                <img
+                  src={safaricomLogo}
+                  alt="Safaricom"
+                  className="absolute right-3 top-3 h-8 w-auto object-contain opacity-30"
+                  loading="lazy"
+                />
                 <div className="relative">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-medium uppercase tracking-wider text-white/75">Main balance</p>
