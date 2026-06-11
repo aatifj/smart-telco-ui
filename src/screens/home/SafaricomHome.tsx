@@ -429,19 +429,27 @@ export function SafaricomHome() {
       <section className="mt-6 px-5 pb-6">
         <h3 className="text-sm font-semibold">Recommended for you</h3>
         <div className="mt-3 space-y-2">
-          {[
-            { t: "Night Owl 5GB", s: "Midnight – 7 AM • ETB 39", c: "🌙" },
-            { t: "Social Pack", s: "WhatsApp + TikTok 3GB • ETB 99", c: "💬" },
-          ].map((r) => (
-            <div key={r.t} className="flex items-center gap-3 rounded-2xl bg-card p-3 shadow-soft">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-lg">{r.c}</span>
-              <div className="flex-1">
-                <p className="text-sm font-semibold">{r.t}</p>
-                <p className="text-xs text-muted-foreground">{r.s}</p>
-              </div>
-              <button className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">Buy</button>
-            </div>
-          ))}
+          {bundleCatalog.filter((b) => ["night-owl", "social-pack"].includes(b.id)).map((r) => {
+            const pts = loyaltyPointsFor(r.price);
+            return (
+              <Link
+                key={r.id}
+                to="/app/buy/$bundleId"
+                params={{ bundleId: r.id }}
+                className="flex items-center gap-3 rounded-2xl bg-card p-3 shadow-soft"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-lg">{r.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold truncate">{r.name}</p>
+                  <p className="text-xs text-muted-foreground truncate">{r.data} • ETB {r.price}</p>
+                  <p className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold text-accent-foreground">
+                    <Sparkles className="h-2.5 w-2.5" /> +{pts} pts
+                  </p>
+                </div>
+                <span className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">Buy</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </div>
