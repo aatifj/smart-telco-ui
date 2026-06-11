@@ -168,14 +168,32 @@ export function SafaricomHome() {
                       Active
                     </span>
                   </div>
-                  <p className="mt-2 text-3xl font-semibold">ETB 1,250.00</p>
+                  <p className="mt-2 text-3xl font-semibold">ETB {mpesa.toFixed(2)}</p>
                   <p className="text-xs text-white/70">Available for transfers & payments</p>
 
-                  <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                  <Link
+                    to="/app/reward"
+                    className="mt-4 flex items-center justify-between rounded-2xl bg-white/15 p-3 backdrop-blur-sm transition-colors hover:bg-white/20"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20">
+                        <Sparkles className="h-4 w-4 text-white" />
+                      </span>
+                      <div className="text-left">
+                        <p className="text-[11px] font-medium uppercase tracking-wider text-white/65">Loyalty points</p>
+                        <p className="text-sm font-semibold">{loyaltyPoints.toLocaleString()} pts · redeem rewards</p>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-semibold">
+                      Open <ChevronRight className="h-3 w-3" />
+                    </span>
+                  </Link>
+
+                  <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
                     {[
-                      { l: "Sent today", v: "ETB 300", sub: "3 transactions" },
-                      { l: "Received", v: "ETB 500", sub: "2 transactions" },
-                      { l: "Cash out", v: "ETB 0", sub: "Agent visits" },
+                      { l: "Sent today", v: "ETB 300", sub: "3 txns" },
+                      { l: "Received", v: "ETB 500", sub: "2 txns" },
+                      { l: "Cash out", v: "ETB 0", sub: "0 visits" },
                     ].map((b) => (
                       <div key={b.l}>
                         <p className="text-[10px] font-medium uppercase tracking-wider text-white/65">{b.l}</p>
