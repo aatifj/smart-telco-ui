@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Lock, Users, Settings2, AlertTriangle, ShieldCheck, ArrowRightLeft, QrCode, Banknote, Coins, Sparkles,
+  Wifi, Phone, MessageSquare, Send, ChevronRight, Plus, Lock, Users, Settings2, AlertTriangle, ShieldCheck, ArrowRightLeft, QrCode, Banknote, Coins, Sparkles,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
