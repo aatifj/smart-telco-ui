@@ -267,87 +267,77 @@ export function SafaricomHome() {
         </div>
       </section>
 
-      {/* Family & Friends */}
+      {/* Quick actions grid */}
       <section className="mt-6 px-5">
-        {isDeactivated ? (
-          <div className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 p-4 opacity-70">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
-              <Lock className="h-4 w-4" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold">Family & Friends</p>
-              <p className="text-xs text-muted-foreground">Reactivate your SIM to manage your family.</p>
-            </div>
-          </div>
-        ) : (
-          <Link
-            to="/app/family"
-            className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-info/10 via-card to-card p-4 shadow-soft"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-info/15 text-info">
-              <Users className="h-5 w-5" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold">Manage Your Family</p>
-              <p className="text-xs text-muted-foreground">Share bundles, track usage, stay connected.</p>
-            </div>
-            <span className="flex items-center gap-1 rounded-full bg-info/10 px-2.5 py-1 text-[10px] font-semibold text-info">
-              4 members <ChevronRight className="h-3 w-3" />
-            </span>
-          </Link>
-        )}
-      </section>
-
-      {/* Internet settings (APN) — quick utility */}
-      <section className="mt-6 px-5">
-        {isDeactivated ? (
-          <div className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 p-4 opacity-70">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
-              <Lock className="h-4 w-4" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold">Fix internet settings</p>
-              <p className="text-xs text-muted-foreground">Reactivate your SIM to configure internet.</p>
-            </div>
-          </div>
-        ) : (
-          <Link
-            to="/app/apn"
-            className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-primary/8 via-card to-card p-4 shadow-soft"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-glow">
-              <Settings2 className="h-5 w-5" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold">Fix internet settings</p>
-              <p className="text-xs text-muted-foreground">
-                Automatically configure your device for the best experience.
-              </p>
-            </div>
-            <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary">
-              Configure <ChevronRight className="h-3 w-3" />
-            </span>
-          </Link>
-        )}
-      </section>
-
-      {/* Report a problem */}
-      <section className="mt-6 px-5">
-        <Link
-          to="/app/report"
-          className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-warning/10 via-card to-card p-4 shadow-soft"
-        >
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-warning/20 text-warning-foreground">
-            <AlertTriangle className="h-5 w-5" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-semibold">Having network issues?</p>
-            <p className="text-xs text-muted-foreground">Report voice, data, or SMS problems.</p>
-          </div>
-          <span className="flex items-center gap-1 rounded-full bg-warning/15 px-2.5 py-1 text-[10px] font-semibold text-warning-foreground">
-            Report <ChevronRight className="h-3 w-3" />
-          </span>
-        </Link>
+        <div className="grid grid-cols-3 gap-3">
+          {(() => {
+            const tiles = [
+              {
+                to: "/app/family",
+                icon: Users,
+                label: "Family",
+                sub: "4 members",
+                iconBg: "bg-info/15 text-info",
+                cardBg: "from-info/10 via-card to-card",
+                disabled: isDeactivated,
+              },
+              {
+                to: "/app/apn",
+                icon: Settings2,
+                label: "Internet",
+                sub: "Fix settings",
+                iconBg: "bg-primary text-primary-foreground shadow-glow",
+                cardBg: "from-primary/8 via-card to-card",
+                disabled: isDeactivated,
+              },
+              {
+                to: "/app/report",
+                icon: AlertTriangle,
+                label: "Network",
+                sub: "Report issue",
+                iconBg: "bg-warning/20 text-warning-foreground",
+                cardBg: "from-warning/10 via-card to-card",
+                disabled: false,
+              },
+              {
+                to: "/app/fayda",
+                icon: ShieldCheck,
+                label: "Fayda ID",
+                sub: "Update",
+                iconBg: "bg-success/15 text-success",
+                cardBg: "from-success/10 via-card to-card",
+                disabled: false,
+              },
+            ];
+            return tiles.map((t) => {
+              const Icon = t.disabled ? Lock : t.icon;
+              const inner = (
+                <>
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-2xl ${t.disabled ? "bg-muted text-muted-foreground" : t.iconBg}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="mt-2 min-w-0">
+                    <p className="truncate text-xs font-semibold">{t.label}</p>
+                    <p className="truncate text-[10px] text-muted-foreground">{t.sub}</p>
+                  </div>
+                </>
+              );
+              const base = "flex aspect-square flex-col justify-between rounded-2xl border border-border p-3 shadow-soft";
+              if (t.disabled) {
+                return (
+                  <div key={t.label} className={`${base} bg-muted/40 opacity-70`}>
+                    {inner}
+                  </div>
+                );
+              }
+              return (
+                <Link key={t.label} to={t.to} className={`${base} bg-gradient-to-br ${t.cardBg}`}>
+                  {inner}
+                </Link>
+              );
+            });
+          })()}
+        </div>
       </section>
 
       {/* My Bundles / Renewal */}
