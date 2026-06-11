@@ -6,6 +6,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
 import { PlayWinCard } from "@/components/PlayWinCard";
 import { useLifecycleGuard } from "@/store/persona";
+import { useBundles } from "@/store/bundles";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useState, useEffect, useCallback } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
