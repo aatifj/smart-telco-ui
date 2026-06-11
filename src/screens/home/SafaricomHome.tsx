@@ -6,6 +6,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
 import { PlayWinCard } from "@/components/PlayWinCard";
 import { useLifecycleGuard } from "@/store/persona";
+import { useBundles } from "@/store/bundles";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useState, useEffect, useCallback } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
@@ -28,10 +29,18 @@ const featured = [
 
 export function SafaricomHome() {
   const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
+  const { bundles } = useBundles();
   const blockPurchase = isRestricted;
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+
+  const dayMs = 1000 * 60 * 60 * 24;
+  const activeBundleCount = bundles.filter((b) => !b.expired && b.expiresAt > Date.now()).length;
+  const expiringSoon = bundles.filter(
+    (b) => !b.expired && b.expiresAt > Date.now() && b.expiresAt - Date.now() < dayMs,
+  ).length;
+
 
   const onSelect = useCallback(() => {
     if (!api) return;
@@ -85,19 +94,23 @@ export function SafaricomHome() {
                   <p className="mt-2 text-3xl font-semibold">ETB 248.50</p>
                   <p className="text-xs text-white/70">+251 7•• ••• 412</p>
 
-                  <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
-                    {[
-                      { l: "Data", v: "12.4 GB", sub: "of 20 GB" },
-                      { l: "Voice", v: "84 min", sub: "remaining" },
-                      { l: "SMS", v: "120", sub: "remaining" },
-                    ].map((b) => (
-                      <div key={b.l}>
-                        <p className="text-[10px] font-medium uppercase tracking-wider text-white/65">{b.l}</p>
-                        <p className="mt-1 text-base font-semibold">{b.v}</p>
-                        <p className="text-[10px] text-white/65">{b.sub}</p>
+                  <Link
+                    to="/app/my-bundles"
+                    className="mt-5 flex items-center justify-between rounded-2xl bg-white/10 p-3 backdrop-blur-sm transition-colors hover:bg-white/15"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15">
+                        <Wifi className="h-4 w-4 text-white" />
+                      </span>
+                      <div className="text-left">
+                        <p className="text-[11px] font-medium uppercase tracking-wider text-white/65">My bundles</p>
+                        <p className="text-sm font-semibold">{activeBundleCount} active · {expiringSoon ? `${expiringSoon} expiring soon` : "all healthy"}</p>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                    <span className="flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold">
+                      View all <ChevronRight className="h-3 w-3" />
+                    </span>
+                  </Link>
 
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     <Link to="/app/bundles" className="rounded-xl bg-white px-3 py-2.5 text-center text-xs font-semibold text-primary">
@@ -107,6 +120,7 @@ export function SafaricomHome() {
                       Build combo
                     </Link>
                   </div>
+
                 </div>
               </div>
             </CarouselItem>
