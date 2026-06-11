@@ -13,10 +13,10 @@ export function AppHeader({ greeting = "Selam" }: { greeting?: string }) {
         <img
           src={safaricomLogo}
           alt="Safaricom Ethiopia"
-          width={200}
-          height={44}
+          width={400}
+          height={88}
           loading="lazy"
-          className="h-11 w-auto object-contain"
+          className="h-22 w-auto object-contain"
         />
       </div>
 
