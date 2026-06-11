@@ -46,6 +46,7 @@ import { Route as AppMarketplaceAddProductRouteImport } from './routes/app.marke
 import { Route as AppFamilyCreateRouteImport } from './routes/app.family.create'
 import { Route as AppFamilyAddRouteImport } from './routes/app.family.add'
 import { Route as AppFamilyMemberIdRouteImport } from './routes/app.family.$memberId'
+import { Route as AppChatNewRouteImport } from './routes/app.chat.new'
 import { Route as AppChatPeerIdRouteImport } from './routes/app.chat.$peerId'
 import { Route as AppMarketplaceStoreStoreIdRouteImport } from './routes/app.marketplace.store.$storeId'
 import { Route as AppMarketplaceProductProductIdRouteImport } from './routes/app.marketplace.product.$productId'
@@ -237,6 +238,11 @@ const AppFamilyMemberIdRoute = AppFamilyMemberIdRouteImport.update({
   path: '/$memberId',
   getParentRoute: () => AppFamilyRoute,
 } as any)
+const AppChatNewRoute = AppChatNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AppChatRoute,
+} as any)
 const AppChatPeerIdRoute = AppChatPeerIdRouteImport.update({
   id: '/$peerId',
   path: '/$peerId',
@@ -286,6 +292,7 @@ export interface FileRoutesByFullPath {
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
+  '/app/chat/new': typeof AppChatNewRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
@@ -328,6 +335,7 @@ export interface FileRoutesByTo {
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
+  '/app/chat/new': typeof AppChatNewRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
@@ -372,6 +380,7 @@ export interface FileRoutesById {
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
+  '/app/chat/new': typeof AppChatNewRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
   '/app/family/add': typeof AppFamilyAddRoute
   '/app/family/create': typeof AppFamilyCreateRoute
@@ -417,6 +426,7 @@ export interface FileRouteTypes {
     | '/app/support'
     | '/app/'
     | '/app/chat/$peerId'
+    | '/app/chat/new'
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
@@ -459,6 +469,7 @@ export interface FileRouteTypes {
     | '/app/support'
     | '/app'
     | '/app/chat/$peerId'
+    | '/app/chat/new'
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
@@ -502,6 +513,7 @@ export interface FileRouteTypes {
     | '/app/support'
     | '/app/'
     | '/app/chat/$peerId'
+    | '/app/chat/new'
     | '/app/family/$memberId'
     | '/app/family/add'
     | '/app/family/create'
@@ -786,6 +798,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFamilyMemberIdRouteImport
       parentRoute: typeof AppFamilyRoute
     }
+    '/app/chat/new': {
+      id: '/app/chat/new'
+      path: '/new'
+      fullPath: '/app/chat/new'
+      preLoaderRoute: typeof AppChatNewRouteImport
+      parentRoute: typeof AppChatRoute
+    }
     '/app/chat/$peerId': {
       id: '/app/chat/$peerId'
       path: '/$peerId'
@@ -819,10 +838,12 @@ declare module '@tanstack/react-router' {
 
 interface AppChatRouteChildren {
   AppChatPeerIdRoute: typeof AppChatPeerIdRoute
+  AppChatNewRoute: typeof AppChatNewRoute
 }
 
 const AppChatRouteChildren: AppChatRouteChildren = {
   AppChatPeerIdRoute: AppChatPeerIdRoute,
+  AppChatNewRoute: AppChatNewRoute,
 }
 
 const AppChatRouteWithChildren =

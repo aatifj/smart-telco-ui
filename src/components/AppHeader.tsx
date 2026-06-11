@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Bell, Search, MessageCircle } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { usePersona, personaMeta } from "@/store/persona";
 import safaricomLogo from "@/assets/safaricom-logo.png";
 
@@ -18,14 +18,6 @@ export function AppHeader({ greeting = "Selam" }: { greeting?: string }) {
           loading="lazy"
           className="h-7 w-auto object-contain"
         />
-        <Link
-          to="/app/chat"
-          className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-soft"
-          aria-label="Messages"
-        >
-          <MessageCircle className="h-[18px] w-[18px]" />
-          <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary ring-2 ring-card" />
-        </Link>
       </div>
 
       <header className="flex items-center justify-between px-5 pt-2 pb-3">

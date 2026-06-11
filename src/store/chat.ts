@@ -28,7 +28,10 @@ interface ChatState {
   sendMessage: (peerId: string, text: string) => void;
   markRead: (peerId: string) => void;
   ensureThread: (peerId: string) => void;
+  addPeer: (input: { name: string; phone: string; avatar?: string }) => string;
 }
+
+const avatarPool = ["🧑🏽", "👩🏽", "🧑🏾", "👩🏾", "🧑🏿", "👨🏽", "👩🏽‍🦱", "🧑🏽‍💼"];
 
 const seedPeers: ChatPeer[] = [
   { id: "p1", name: "Hanna T.", phone: "+251 7•• ••• 221", avatar: "👩🏽", online: true },
@@ -66,6 +69,22 @@ export const useChat = create<ChatState>()(
     (set, get) => ({
       peers: seedPeers,
       threads: seedThreads,
+      addPeer: ({ name, phone, avatar }) => {
+        const existing = get().peers.find(
+          (p) => p.phone.replace(/\D/g, "").slice(-10) === phone.replace(/\D/g, "").slice(-10),
+        );
+        if (existing) return existing.id;
+        const id = `p${Date.now()}`;
+        const newPeer: ChatPeer = {
+          id,
+          name,
+          phone,
+          avatar: avatar ?? avatarPool[Math.floor(Math.random() * avatarPool.length)],
+          online: false,
+        };
+        set((s) => ({ peers: [...s.peers, newPeer] }));
+        return id;
+      },
       ensureThread: (peerId) => {
         if (get().threads[peerId]) return;
         set((s) => ({

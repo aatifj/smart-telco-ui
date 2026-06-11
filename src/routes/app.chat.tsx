@@ -36,12 +36,13 @@ function ChatListPage() {
           <h1 className="text-lg font-semibold">Messages</h1>
           <p className="text-xs text-muted-foreground">Chat with other Safaricom users</p>
         </div>
-        <button
+        <Link
+          to="/app/chat/new"
           className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-glow"
           aria-label="New chat"
         >
           <MessageSquarePlus className="h-4 w-4" />
-        </button>
+        </Link>
       </header>
 
       <div className="mt-4 px-5">
