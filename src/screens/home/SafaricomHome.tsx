@@ -30,6 +30,8 @@ const featured = bundleCatalog.filter((b) => ["daily-saver", "weekly-pro", "mega
 export function SafaricomHome() {
   const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
   const { bundles } = useBundles();
+  const { airtime, mpesa, loyaltyPoints, advanceLimit, advanceOwed } = useWallet();
+  const advanceAvailable = advanceLimit - advanceOwed;
   const blockPurchase = isRestricted;
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
