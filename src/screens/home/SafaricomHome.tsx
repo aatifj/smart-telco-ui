@@ -10,6 +10,7 @@ import { useBundles } from "@/store/bundles";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useState, useEffect, useCallback } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
+import safaricomLogo from "@/assets/safaricom-logo.png";
 
 const quickActions = [
   { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles", restrict: true },
