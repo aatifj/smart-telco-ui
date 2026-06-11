@@ -134,7 +134,7 @@ export function SafaricomHome() {
 
             {/* M-PESA balance slide */}
             <CarouselItem className="pl-4 basis-full">
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-success to-success/80 p-5 text-success-foreground shadow-glow">
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-success to-success/80 p-5 text-success-foreground shadow-glow transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] hover:shadow-elevated">
                 <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
                 <img
                   src={safaricomLogo}
