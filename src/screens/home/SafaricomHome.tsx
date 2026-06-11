@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock, Users, Settings2, AlertTriangle, RefreshCw, ShieldCheck, ArrowRightLeft, QrCode, Banknote,
+  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Lock, Users, Settings2, AlertTriangle, ShieldCheck, ArrowRightLeft, QrCode, Banknote,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
@@ -374,61 +374,10 @@ export function SafaricomHome() {
         </div>
       </section>
 
-      {/* My Bundles / Renewal */}
-      <section className="mt-6 px-5">
-        <Link
-          to="/app/my-bundles"
-          className="flex items-center gap-3 rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-card to-card p-4 shadow-soft"
-        >
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-glow">
-            <RefreshCw className="h-5 w-5" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-semibold">My bundles · Weekly Pro</p>
-            <p className="text-xs text-muted-foreground">Renews in 3d · Auto-renew on</p>
-          </div>
-          <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary">
-            Renew <ChevronRight className="h-3 w-3" />
-          </span>
-        </Link>
-      </section>
-
-
       {/* Play & Win */}
       <div className="mt-6">
         <PlayWinCard />
       </div>
-
-      {/* DIY teaser */}
-      <section className="mt-6 px-5">
-        {blockPurchase ? (
-          <div className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 p-4 opacity-70">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
-              <Lock className="h-4 w-4" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold">Build your own combo</p>
-              <p className="text-xs text-muted-foreground">
-                {isDeactivated ? "Reactivate your SIM to use the DIY builder." : "Top up to unlock the DIY builder."}
-              </p>
-            </div>
-          </div>
-        ) : (
-          <Link
-            to="/app/diy"
-            className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/8 to-transparent p-4"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-glow">
-              <Sparkles className="h-5 w-5" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold">Build your own combo</p>
-              <p className="text-xs text-muted-foreground">Mix data, voice & SMS — pay only for what you need.</p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
-          </Link>
-        )}
-      </section>
 
       {/* Recommendations */}
       <section className="mt-6 px-5 pb-6">
