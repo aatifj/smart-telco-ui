@@ -30,6 +30,7 @@ import { Route as AppGiftRouteImport } from './routes/app.gift'
 import { Route as AppFaydaRouteImport } from './routes/app.fayda'
 import { Route as AppFamilyRouteImport } from './routes/app.family'
 import { Route as AppDiyRouteImport } from './routes/app.diy'
+import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
 import { Route as AppApnRouteImport } from './routes/app.apn'
 import { Route as AppRewardSuccessRouteImport } from './routes/app.reward.success'
@@ -154,6 +155,11 @@ const AppDiyRoute = AppDiyRouteImport.update({
   path: '/diy',
   getParentRoute: () => AppRoute,
 } as any)
+const AppChatRoute = AppChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppBundlesRoute = AppBundlesRouteImport.update({
   id: '/bundles',
   path: '/bundles',
@@ -253,6 +259,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
+  '/app/chat': typeof AppChatRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
@@ -293,6 +300,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
+  '/app/chat': typeof AppChatRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
@@ -335,6 +343,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
+  '/app/chat': typeof AppChatRoute
   '/app/diy': typeof AppDiyRoute
   '/app/family': typeof AppFamilyRouteWithChildren
   '/app/fayda': typeof AppFaydaRoute
@@ -378,6 +387,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/apn'
     | '/app/bundles'
+    | '/app/chat'
     | '/app/diy'
     | '/app/family'
     | '/app/fayda'
@@ -418,6 +428,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app/apn'
     | '/app/bundles'
+    | '/app/chat'
     | '/app/diy'
     | '/app/family'
     | '/app/fayda'
@@ -459,6 +470,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/apn'
     | '/app/bundles'
+    | '/app/chat'
     | '/app/diy'
     | '/app/family'
     | '/app/fayda'
@@ -648,6 +660,13 @@ declare module '@tanstack/react-router' {
       path: '/diy'
       fullPath: '/app/diy'
       preLoaderRoute: typeof AppDiyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/chat': {
+      id: '/app/chat'
+      path: '/chat'
+      fullPath: '/app/chat'
+      preLoaderRoute: typeof AppChatRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/bundles': {
@@ -862,6 +881,7 @@ const AppRewardRouteWithChildren = AppRewardRoute._addFileChildren(
 interface AppRouteChildren {
   AppApnRoute: typeof AppApnRoute
   AppBundlesRoute: typeof AppBundlesRoute
+  AppChatRoute: typeof AppChatRoute
   AppDiyRoute: typeof AppDiyRoute
   AppFamilyRoute: typeof AppFamilyRouteWithChildren
   AppFaydaRoute: typeof AppFaydaRoute
@@ -886,6 +906,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppApnRoute: AppApnRoute,
   AppBundlesRoute: AppBundlesRoute,
+  AppChatRoute: AppChatRoute,
   AppDiyRoute: AppDiyRoute,
   AppFamilyRoute: AppFamilyRouteWithChildren,
   AppFaydaRoute: AppFaydaRoute,
