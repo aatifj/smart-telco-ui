@@ -34,6 +34,7 @@ import { Route as AppDiyRouteImport } from './routes/app.diy'
 import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppBundlesRouteImport } from './routes/app.bundles'
 import { Route as AppApnRouteImport } from './routes/app.apn'
+import { Route as AppAdvanceRouteImport } from './routes/app.advance'
 import { Route as AppRewardSuccessRouteImport } from './routes/app.reward.success'
 import { Route as AppPlayWinRouteImport } from './routes/app.play.win'
 import { Route as AppPlayTriviaRouteImport } from './routes/app.play.trivia'
@@ -49,6 +50,7 @@ import { Route as AppFamilyAddRouteImport } from './routes/app.family.add'
 import { Route as AppFamilyMemberIdRouteImport } from './routes/app.family.$memberId'
 import { Route as AppChatNewRouteImport } from './routes/app.chat.new'
 import { Route as AppChatPeerIdRouteImport } from './routes/app.chat.$peerId'
+import { Route as AppBuyBundleIdRouteImport } from './routes/app.buy.$bundleId'
 import { Route as AppStreakClaimDaysRouteImport } from './routes/app.streak.claim.$days'
 import { Route as AppMarketplaceStoreStoreIdRouteImport } from './routes/app.marketplace.store.$storeId'
 import { Route as AppMarketplaceProductProductIdRouteImport } from './routes/app.marketplace.product.$productId'
@@ -179,6 +181,11 @@ const AppApnRoute = AppApnRouteImport.update({
   path: '/apn',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdvanceRoute = AppAdvanceRouteImport.update({
+  id: '/advance',
+  path: '/advance',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppRewardSuccessRoute = AppRewardSuccessRouteImport.update({
   id: '/success',
   path: '/success',
@@ -255,6 +262,11 @@ const AppChatPeerIdRoute = AppChatPeerIdRouteImport.update({
   path: '/$peerId',
   getParentRoute: () => AppChatRoute,
 } as any)
+const AppBuyBundleIdRoute = AppBuyBundleIdRouteImport.update({
+  id: '/buy/$bundleId',
+  path: '/buy/$bundleId',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppStreakClaimDaysRoute = AppStreakClaimDaysRouteImport.update({
   id: '/claim/$days',
   path: '/claim/$days',
@@ -281,6 +293,7 @@ const AppFamilyMemberIdBuyRoute = AppFamilyMemberIdBuyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/advance': typeof AppAdvanceRoute
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
   '/app/chat': typeof AppChatRouteWithChildren
@@ -304,6 +317,7 @@ export interface FileRoutesByFullPath {
   '/app/streak': typeof AppStreakRouteWithChildren
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/buy/$bundleId': typeof AppBuyBundleIdRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
   '/app/chat/new': typeof AppChatNewRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
@@ -326,6 +340,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/advance': typeof AppAdvanceRoute
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
   '/app/chat': typeof AppChatRouteWithChildren
@@ -349,6 +364,7 @@ export interface FileRoutesByTo {
   '/app/streak': typeof AppStreakRouteWithChildren
   '/app/support': typeof AppSupportRoute
   '/app': typeof AppIndexRoute
+  '/app/buy/$bundleId': typeof AppBuyBundleIdRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
   '/app/chat/new': typeof AppChatNewRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
@@ -373,6 +389,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/advance': typeof AppAdvanceRoute
   '/app/apn': typeof AppApnRoute
   '/app/bundles': typeof AppBundlesRoute
   '/app/chat': typeof AppChatRouteWithChildren
@@ -396,6 +413,7 @@ export interface FileRoutesById {
   '/app/streak': typeof AppStreakRouteWithChildren
   '/app/support': typeof AppSupportRoute
   '/app/': typeof AppIndexRoute
+  '/app/buy/$bundleId': typeof AppBuyBundleIdRoute
   '/app/chat/$peerId': typeof AppChatPeerIdRoute
   '/app/chat/new': typeof AppChatNewRoute
   '/app/family/$memberId': typeof AppFamilyMemberIdRouteWithChildren
@@ -421,6 +439,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/app/advance'
     | '/app/apn'
     | '/app/bundles'
     | '/app/chat'
@@ -444,6 +463,7 @@ export interface FileRouteTypes {
     | '/app/streak'
     | '/app/support'
     | '/app/'
+    | '/app/buy/$bundleId'
     | '/app/chat/$peerId'
     | '/app/chat/new'
     | '/app/family/$memberId'
@@ -466,6 +486,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app/advance'
     | '/app/apn'
     | '/app/bundles'
     | '/app/chat'
@@ -489,6 +510,7 @@ export interface FileRouteTypes {
     | '/app/streak'
     | '/app/support'
     | '/app'
+    | '/app/buy/$bundleId'
     | '/app/chat/$peerId'
     | '/app/chat/new'
     | '/app/family/$memberId'
@@ -512,6 +534,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/app/advance'
     | '/app/apn'
     | '/app/bundles'
     | '/app/chat'
@@ -535,6 +558,7 @@ export interface FileRouteTypes {
     | '/app/streak'
     | '/app/support'
     | '/app/'
+    | '/app/buy/$bundleId'
     | '/app/chat/$peerId'
     | '/app/chat/new'
     | '/app/family/$memberId'
@@ -738,6 +762,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppApnRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/advance': {
+      id: '/app/advance'
+      path: '/advance'
+      fullPath: '/app/advance'
+      preLoaderRoute: typeof AppAdvanceRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/reward/success': {
       id: '/app/reward/success'
       path: '/success'
@@ -842,6 +873,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/chat/$peerId'
       preLoaderRoute: typeof AppChatPeerIdRouteImport
       parentRoute: typeof AppChatRoute
+    }
+    '/app/buy/$bundleId': {
+      id: '/app/buy/$bundleId'
+      path: '/buy/$bundleId'
+      fullPath: '/app/buy/$bundleId'
+      preLoaderRoute: typeof AppBuyBundleIdRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/streak/claim/$days': {
       id: '/app/streak/claim/$days'
@@ -980,6 +1018,7 @@ const AppStreakRouteWithChildren = AppStreakRoute._addFileChildren(
 )
 
 interface AppRouteChildren {
+  AppAdvanceRoute: typeof AppAdvanceRoute
   AppApnRoute: typeof AppApnRoute
   AppBundlesRoute: typeof AppBundlesRoute
   AppChatRoute: typeof AppChatRouteWithChildren
@@ -1003,9 +1042,11 @@ interface AppRouteChildren {
   AppStreakRoute: typeof AppStreakRouteWithChildren
   AppSupportRoute: typeof AppSupportRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppBuyBundleIdRoute: typeof AppBuyBundleIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdvanceRoute: AppAdvanceRoute,
   AppApnRoute: AppApnRoute,
   AppBundlesRoute: AppBundlesRoute,
   AppChatRoute: AppChatRouteWithChildren,
@@ -1029,6 +1070,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppStreakRoute: AppStreakRouteWithChildren,
   AppSupportRoute: AppSupportRoute,
   AppIndexRoute: AppIndexRoute,
+  AppBuyBundleIdRoute: AppBuyBundleIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -1040,12 +1082,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

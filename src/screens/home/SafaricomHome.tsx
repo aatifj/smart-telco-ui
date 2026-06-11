@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Lock, Users, Settings2, AlertTriangle, ShieldCheck, ArrowRightLeft, QrCode, Banknote,
+  Wifi, Phone, MessageSquare, Send, ChevronRight, Plus, Lock, Users, Settings2, AlertTriangle, ShieldCheck, ArrowRightLeft, QrCode, Banknote, Coins, Sparkles,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
@@ -8,30 +8,30 @@ import { PlayWinCard } from "@/components/PlayWinCard";
 import { StreakCard } from "@/components/StreakCard";
 import { useLifecycleGuard } from "@/store/persona";
 import { useBundles } from "@/store/bundles";
+import { useWallet } from "@/store/wallet";
+import { bundleCatalog, loyaltyPointsFor } from "@/lib/catalog";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useState, useEffect, useCallback } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
 import safaricomLogo from "@/assets/safaricom-logo.png";
 
 const quickActions = [
-  { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles", restrict: true },
-  { icon: Phone, label: "Buy Voice", color: "bg-info/10 text-info", to: "/app/bundles", restrict: true },
-  { icon: MessageSquare, label: "Buy SMS", color: "bg-warning/15 text-warning-foreground", to: "/app/bundles", restrict: true },
-  { icon: Send, label: "Send Airtime", color: "bg-accent text-accent-foreground", to: "/app/services", restrict: false },
-  { icon: Wallet, label: "M-PESA", color: "bg-primary/10 text-primary", to: "/app/services", restrict: false },
+  { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles" as const, restrict: true },
+  { icon: Phone, label: "Buy Voice", color: "bg-info/10 text-info", to: "/app/bundles" as const, restrict: true },
+  { icon: MessageSquare, label: "Buy SMS", color: "bg-warning/15 text-warning-foreground", to: "/app/bundles" as const, restrict: true },
+  { icon: Coins, label: "Advance", color: "bg-warning/15 text-warning-foreground", to: "/app/advance" as const, restrict: false },
+  { icon: Send, label: "Send Airtime", color: "bg-accent text-accent-foreground", to: "/app/services" as const, restrict: false },
 ];
 
 const categories = ["Daily", "Weekly", "Monthly", "Unlimited", "Mega"];
 
-const featured = [
-  { name: "Daily Saver", data: "1.5 GB", price: "ETB 49", tag: "Popular" },
-  { name: "Weekly Pro", data: "8 GB + 30 min", price: "ETB 299", tag: "Best value" },
-  { name: "Mega Stream", data: "50 GB", price: "ETB 1,499", tag: "New" },
-];
+const featured = bundleCatalog.filter((b) => ["daily-saver", "weekly-pro", "mega-stream"].includes(b.id));
 
 export function SafaricomHome() {
   const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
   const { bundles } = useBundles();
+  const { airtime, mpesa, loyaltyPoints, advanceLimit, advanceOwed } = useWallet();
+  const advanceAvailable = advanceLimit - advanceOwed;
   const blockPurchase = isRestricted;
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -99,8 +99,26 @@ export function SafaricomHome() {
                       Prepaid
                     </span>
                   </div>
-                  <p className="mt-2 text-3xl font-semibold">ETB 248.50</p>
+                  <p className="mt-2 text-3xl font-semibold">ETB {airtime.toFixed(2)}</p>
                   <p className="text-xs text-white/70">+251 7•• ••• 412</p>
+
+                  <Link
+                    to="/app/advance"
+                    className="mt-4 flex items-center justify-between rounded-2xl bg-white/10 p-3 backdrop-blur-sm transition-colors hover:bg-white/15"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15">
+                        <Coins className="h-4 w-4 text-white" />
+                      </span>
+                      <div className="text-left">
+                        <p className="text-[11px] font-medium uppercase tracking-wider text-white/65">Airtime advance</p>
+                        <p className="text-sm font-semibold">ETB {advanceAvailable.toFixed(0)} available{advanceOwed > 0 ? ` · ETB ${advanceOwed.toFixed(0)} owed` : ""}</p>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold">
+                      Get <ChevronRight className="h-3 w-3" />
+                    </span>
+                  </Link>
 
                   <Link
                     to="/app/my-bundles"
@@ -150,14 +168,32 @@ export function SafaricomHome() {
                       Active
                     </span>
                   </div>
-                  <p className="mt-2 text-3xl font-semibold">ETB 1,250.00</p>
+                  <p className="mt-2 text-3xl font-semibold">ETB {mpesa.toFixed(2)}</p>
                   <p className="text-xs text-white/70">Available for transfers & payments</p>
 
-                  <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                  <Link
+                    to="/app/reward"
+                    className="mt-4 flex items-center justify-between rounded-2xl bg-white/15 p-3 backdrop-blur-sm transition-colors hover:bg-white/20"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20">
+                        <Sparkles className="h-4 w-4 text-white" />
+                      </span>
+                      <div className="text-left">
+                        <p className="text-[11px] font-medium uppercase tracking-wider text-white/65">Loyalty points</p>
+                        <p className="text-sm font-semibold">{loyaltyPoints.toLocaleString()} pts · redeem rewards</p>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-semibold">
+                      Open <ChevronRight className="h-3 w-3" />
+                    </span>
+                  </Link>
+
+                  <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
                     {[
-                      { l: "Sent today", v: "ETB 300", sub: "3 transactions" },
-                      { l: "Received", v: "ETB 500", sub: "2 transactions" },
-                      { l: "Cash out", v: "ETB 0", sub: "Agent visits" },
+                      { l: "Sent today", v: "ETB 300", sub: "3 txns" },
+                      { l: "Received", v: "ETB 500", sub: "2 txns" },
+                      { l: "Cash out", v: "ETB 0", sub: "0 visits" },
                     ].map((b) => (
                       <div key={b.l}>
                         <p className="text-[10px] font-medium uppercase tracking-wider text-white/65">{b.l}</p>
@@ -282,22 +318,32 @@ export function SafaricomHome() {
         </div>
 
         <div className="no-scrollbar mt-4 flex gap-3 overflow-x-auto px-5 pb-1">
-          {featured.map((b) => (
-            <div key={b.name} className={`relative min-w-[170px] rounded-2xl border border-border bg-gradient-card p-4 shadow-soft ${blockPurchase ? "opacity-60" : ""}`}>
-              <span className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">{b.tag}</span>
-              <p className="mt-3 text-sm font-semibold">{b.name}</p>
-              <p className="text-xs text-muted-foreground">{b.data}</p>
-              <div className="mt-3 flex items-center justify-between">
-                <p className="text-base font-bold text-foreground">{b.price}</p>
-                <button
-                  disabled={blockPurchase}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:bg-muted disabled:text-muted-foreground"
-                >
-                  {blockPurchase ? <Lock className="h-3.5 w-3.5" /> : <Plus className="h-4 w-4" />}
-                </button>
+          {featured.map((b) => {
+            const points = loyaltyPointsFor(b.price);
+            const inner = (
+              <div className={`relative min-w-[180px] rounded-2xl border border-border bg-gradient-card p-4 shadow-soft ${blockPurchase ? "opacity-60" : ""}`}>
+                {b.tag && <span className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">{b.tag}</span>}
+                <p className="mt-3 text-sm font-semibold">{b.name}</p>
+                <p className="text-xs text-muted-foreground">{b.data}</p>
+                <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold text-accent-foreground">
+                  <Sparkles className="h-2.5 w-2.5" /> +{points} pts
+                </p>
+                <div className="mt-3 flex items-center justify-between">
+                  <p className="text-base font-bold text-foreground">ETB {b.price}</p>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    {blockPurchase ? <Lock className="h-3.5 w-3.5" /> : <Plus className="h-4 w-4" />}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+            return blockPurchase ? (
+              <div key={b.id}>{inner}</div>
+            ) : (
+              <Link key={b.id} to="/app/buy/$bundleId" params={{ bundleId: b.id }}>
+                {inner}
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -383,19 +429,27 @@ export function SafaricomHome() {
       <section className="mt-6 px-5 pb-6">
         <h3 className="text-sm font-semibold">Recommended for you</h3>
         <div className="mt-3 space-y-2">
-          {[
-            { t: "Night Owl 5GB", s: "Midnight – 7 AM • ETB 39", c: "🌙" },
-            { t: "Social Pack", s: "WhatsApp + TikTok 3GB • ETB 99", c: "💬" },
-          ].map((r) => (
-            <div key={r.t} className="flex items-center gap-3 rounded-2xl bg-card p-3 shadow-soft">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-lg">{r.c}</span>
-              <div className="flex-1">
-                <p className="text-sm font-semibold">{r.t}</p>
-                <p className="text-xs text-muted-foreground">{r.s}</p>
-              </div>
-              <button className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">Buy</button>
-            </div>
-          ))}
+          {bundleCatalog.filter((b) => ["night-owl", "social-pack"].includes(b.id)).map((r) => {
+            const pts = loyaltyPointsFor(r.price);
+            return (
+              <Link
+                key={r.id}
+                to="/app/buy/$bundleId"
+                params={{ bundleId: r.id }}
+                className="flex items-center gap-3 rounded-2xl bg-card p-3 shadow-soft"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-lg">{r.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold truncate">{r.name}</p>
+                  <p className="text-xs text-muted-foreground truncate">{r.data} • ETB {r.price}</p>
+                  <p className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold text-accent-foreground">
+                    <Sparkles className="h-2.5 w-2.5" /> +{pts} pts
+                  </p>
+                </div>
+                <span className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">Buy</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </div>
