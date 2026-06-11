@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Lock, Users, Settings2, AlertTriangle, ShieldCheck, ArrowRightLeft, QrCode, Banknote,
+  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Lock, Users, Settings2, AlertTriangle, ShieldCheck, ArrowRightLeft, QrCode, Banknote, Coins, Sparkles,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
@@ -8,26 +8,24 @@ import { PlayWinCard } from "@/components/PlayWinCard";
 import { StreakCard } from "@/components/StreakCard";
 import { useLifecycleGuard } from "@/store/persona";
 import { useBundles } from "@/store/bundles";
+import { useWallet } from "@/store/wallet";
+import { bundleCatalog, loyaltyPointsFor } from "@/lib/catalog";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useState, useEffect, useCallback } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
 import safaricomLogo from "@/assets/safaricom-logo.png";
 
 const quickActions = [
-  { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles", restrict: true },
-  { icon: Phone, label: "Buy Voice", color: "bg-info/10 text-info", to: "/app/bundles", restrict: true },
-  { icon: MessageSquare, label: "Buy SMS", color: "bg-warning/15 text-warning-foreground", to: "/app/bundles", restrict: true },
-  { icon: Send, label: "Send Airtime", color: "bg-accent text-accent-foreground", to: "/app/services", restrict: false },
-  { icon: Wallet, label: "M-PESA", color: "bg-primary/10 text-primary", to: "/app/services", restrict: false },
+  { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles" as const, restrict: true },
+  { icon: Phone, label: "Buy Voice", color: "bg-info/10 text-info", to: "/app/bundles" as const, restrict: true },
+  { icon: MessageSquare, label: "Buy SMS", color: "bg-warning/15 text-warning-foreground", to: "/app/bundles" as const, restrict: true },
+  { icon: Coins, label: "Advance", color: "bg-warning/15 text-warning-foreground", to: "/app/advance" as const, restrict: false },
+  { icon: Send, label: "Send Airtime", color: "bg-accent text-accent-foreground", to: "/app/services" as const, restrict: false },
 ];
 
 const categories = ["Daily", "Weekly", "Monthly", "Unlimited", "Mega"];
 
-const featured = [
-  { name: "Daily Saver", data: "1.5 GB", price: "ETB 49", tag: "Popular" },
-  { name: "Weekly Pro", data: "8 GB + 30 min", price: "ETB 299", tag: "Best value" },
-  { name: "Mega Stream", data: "50 GB", price: "ETB 1,499", tag: "New" },
-];
+const featured = bundleCatalog.filter((b) => ["daily-saver", "weekly-pro", "mega-stream"].includes(b.id));
 
 export function SafaricomHome() {
   const { isRestricted, isSuspended, isDeactivated } = useLifecycleGuard();
