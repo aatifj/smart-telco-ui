@@ -79,7 +79,7 @@ export function SafaricomHome() {
           <CarouselContent className="-ml-4">
             {/* Main balance slide */}
             <CarouselItem className="pl-4 basis-full">
-              <div className={`relative overflow-hidden rounded-3xl p-5 text-primary-foreground shadow-glow ${
+              <div className={`relative overflow-hidden rounded-3xl p-5 text-primary-foreground shadow-glow transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] hover:shadow-elevated ${
                 isDeactivated ? "bg-gradient-to-br from-destructive to-destructive/70" :
                 isSuspended ? "bg-gradient-to-br from-warning-foreground/90 to-warning-foreground/70" :
                 "bg-gradient-primary"
@@ -134,7 +134,7 @@ export function SafaricomHome() {
 
             {/* M-PESA balance slide */}
             <CarouselItem className="pl-4 basis-full">
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-success to-success/80 p-5 text-success-foreground shadow-glow">
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-success to-success/80 p-5 text-success-foreground shadow-glow transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] hover:shadow-elevated">
                 <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
                 <img
                   src={safaricomLogo}
