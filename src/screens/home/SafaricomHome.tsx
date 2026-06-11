@@ -318,22 +318,32 @@ export function SafaricomHome() {
         </div>
 
         <div className="no-scrollbar mt-4 flex gap-3 overflow-x-auto px-5 pb-1">
-          {featured.map((b) => (
-            <div key={b.name} className={`relative min-w-[170px] rounded-2xl border border-border bg-gradient-card p-4 shadow-soft ${blockPurchase ? "opacity-60" : ""}`}>
-              <span className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">{b.tag}</span>
-              <p className="mt-3 text-sm font-semibold">{b.name}</p>
-              <p className="text-xs text-muted-foreground">{b.data}</p>
-              <div className="mt-3 flex items-center justify-between">
-                <p className="text-base font-bold text-foreground">{b.price}</p>
-                <button
-                  disabled={blockPurchase}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:bg-muted disabled:text-muted-foreground"
-                >
-                  {blockPurchase ? <Lock className="h-3.5 w-3.5" /> : <Plus className="h-4 w-4" />}
-                </button>
+          {featured.map((b) => {
+            const points = loyaltyPointsFor(b.price);
+            const inner = (
+              <div className={`relative min-w-[180px] rounded-2xl border border-border bg-gradient-card p-4 shadow-soft ${blockPurchase ? "opacity-60" : ""}`}>
+                {b.tag && <span className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">{b.tag}</span>}
+                <p className="mt-3 text-sm font-semibold">{b.name}</p>
+                <p className="text-xs text-muted-foreground">{b.data}</p>
+                <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold text-accent-foreground">
+                  <Sparkles className="h-2.5 w-2.5" /> +{points} pts
+                </p>
+                <div className="mt-3 flex items-center justify-between">
+                  <p className="text-base font-bold text-foreground">ETB {b.price}</p>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    {blockPurchase ? <Lock className="h-3.5 w-3.5" /> : <Plus className="h-4 w-4" />}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+            return blockPurchase ? (
+              <div key={b.id}>{inner}</div>
+            ) : (
+              <Link key={b.id} to="/app/buy/$bundleId" params={{ bundleId: b.id }}>
+                {inner}
+              </Link>
+            );
+          })}
         </div>
       </section>
 
