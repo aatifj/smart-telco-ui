@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock, Users, Settings2, AlertTriangle, RefreshCw, ShieldCheck,
+  Wifi, Phone, MessageSquare, Send, Wallet, ChevronRight, Plus, Sparkles, Lock, Users, Settings2, AlertTriangle, RefreshCw, ShieldCheck, ArrowRightLeft, QrCode, Banknote,
 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
 import { PlayWinCard } from "@/components/PlayWinCard";
 import { useLifecycleGuard } from "@/store/persona";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
 const quickActions = [
   { icon: Wifi, label: "Buy Data", color: "bg-primary/10 text-primary", to: "/app/bundles", restrict: true },
