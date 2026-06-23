@@ -12,13 +12,14 @@ function BuyBundlePage() {
   const { bundleId } = Route.useParams();
   const navigate = useNavigate();
   const bundle = getBundle(bundleId);
-  const { airtime, mpesa, advanceLimit, advanceOwed, pay, earnPoints } = useWallet();
+  const { airtime, mpesa, advanceLimit, advanceOwed, banks, loyaltyPoints, pay, earnPoints } = useWallet();
   const [method, setMethod] = useState<PaymentMethod>("airtime");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   const points = useMemo(() => (bundle ? loyaltyPointsFor(bundle.price) : 0), [bundle]);
   const advanceAvailable = advanceLimit - advanceOwed;
+  const pointsNeeded = bundle ? Math.ceil(bundle.price * POINTS_PER_ETB) : 0;
 
   if (!bundle) {
     return (
