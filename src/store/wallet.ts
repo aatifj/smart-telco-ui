@@ -1,6 +1,16 @@
 import { create } from "zustand";
 
-export type PaymentMethod = "airtime" | "mpesa" | "advance";
+export type PaymentMethod =
+  | "airtime"
+  | "mpesa"
+  | "advance"
+  | "cbe"
+  | "awash"
+  | "dashen"
+  | "rewards";
+
+/** Loyalty point to ETB conversion (10 pts = 1 ETB). */
+export const POINTS_PER_ETB = 10;
 
 interface WalletState {
   airtime: number;
@@ -10,6 +20,8 @@ interface WalletState {
   advanceOwed: number;
   /** Maximum advance the customer is eligible for. */
   advanceLimit: number;
+  /** Linked bank account balances (simulated). */
+  banks: { cbe: number; awash: number; dashen: number };
 
   pay: (amount: number, method: PaymentMethod) => { ok: boolean; reason?: string };
   earnPoints: (points: number) => void;
@@ -23,6 +35,7 @@ export const useWallet = create<WalletState>((set, get) => ({
   loyaltyPoints: 1840,
   advanceOwed: 0,
   advanceLimit: 250,
+  banks: { cbe: 5400, awash: 3200, dashen: 1800 },
 
   pay: (amount, method) => {
     const s = get();
@@ -36,6 +49,16 @@ export const useWallet = create<WalletState>((set, get) => ({
       const available = s.advanceLimit - s.advanceOwed;
       if (available < amount) return { ok: false, reason: "Advance limit exceeded" };
       set({ advanceOwed: +(s.advanceOwed + amount).toFixed(2) });
+    } else if (method === "cbe" || method === "awash" || method === "dashen") {
+      const bal = s.banks[method];
+      if (bal < amount) return { ok: false, reason: "Insufficient bank balance" };
+      set({ banks: { ...s.banks, [method]: +(bal - amount).toFixed(2) } });
+    } else if (method === "rewards") {
+      const needed = Math.ceil(amount * POINTS_PER_ETB);
+      if (s.loyaltyPoints < needed)
+        return { ok: false, reason: `Need ${needed} points (have ${s.loyaltyPoints})` };
+      set({ loyaltyPoints: s.loyaltyPoints - needed });
+      return { ok: true };
     }
     return { ok: true };
   },

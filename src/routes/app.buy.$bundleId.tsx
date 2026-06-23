@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { ArrowLeft, Wifi, Wallet, Smartphone, Coins, Check, AlertCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, Wifi, Wallet, Smartphone, Coins, Check, AlertCircle, Sparkles, Landmark, Gift } from "lucide-react";
 import { getBundle, loyaltyPointsFor } from "@/lib/catalog";
-import { useWallet, type PaymentMethod } from "@/store/wallet";
+import { useWallet, type PaymentMethod, POINTS_PER_ETB } from "@/store/wallet";
 
 export const Route = createFileRoute("/app/buy/$bundleId")({
   component: BuyBundlePage,
@@ -12,13 +12,14 @@ function BuyBundlePage() {
   const { bundleId } = Route.useParams();
   const navigate = useNavigate();
   const bundle = getBundle(bundleId);
-  const { airtime, mpesa, advanceLimit, advanceOwed, pay, earnPoints } = useWallet();
+  const { airtime, mpesa, advanceLimit, advanceOwed, banks, loyaltyPoints, pay, earnPoints } = useWallet();
   const [method, setMethod] = useState<PaymentMethod>("airtime");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   const points = useMemo(() => (bundle ? loyaltyPointsFor(bundle.price) : 0), [bundle]);
   const advanceAvailable = advanceLimit - advanceOwed;
+  const pointsNeeded = bundle ? Math.ceil(bundle.price * POINTS_PER_ETB) : 0;
 
   if (!bundle) {
     return (
@@ -33,6 +34,10 @@ function BuyBundlePage() {
     { key: "airtime", label: "Airtime", sub: `Balance ETB ${airtime.toFixed(2)}`, icon: Smartphone, enabled: airtime >= bundle.price, reason: "Top up airtime first" },
     { key: "mpesa", label: "M-PESA Wallet", sub: `Balance ETB ${mpesa.toFixed(2)}`, icon: Wallet, enabled: mpesa >= bundle.price, reason: "Insufficient M-PESA balance" },
     { key: "advance", label: "Airtime Advance", sub: `Available ETB ${advanceAvailable.toFixed(2)}`, icon: Coins, enabled: advanceAvailable >= bundle.price, reason: "Exceeds your advance limit" },
+    { key: "rewards", label: "Rewards Wallet", sub: `${pointsNeeded} pts · You have ${loyaltyPoints}`, icon: Gift, enabled: loyaltyPoints >= pointsNeeded, reason: `Need ${pointsNeeded} loyalty points` },
+    { key: "cbe", label: "CBE Bank", sub: `Acct balance ETB ${banks.cbe.toFixed(2)}`, icon: Landmark, enabled: banks.cbe >= bundle.price, reason: "Insufficient CBE balance" },
+    { key: "awash", label: "Awash Bank", sub: `Acct balance ETB ${banks.awash.toFixed(2)}`, icon: Landmark, enabled: banks.awash >= bundle.price, reason: "Insufficient Awash balance" },
+    { key: "dashen", label: "Dashen Bank", sub: `Acct balance ETB ${banks.dashen.toFixed(2)}`, icon: Landmark, enabled: banks.dashen >= bundle.price, reason: "Insufficient Dashen balance" },
   ];
 
   const handleConfirm = () => {
@@ -42,7 +47,8 @@ function BuyBundlePage() {
       setError(res.reason ?? "Payment failed");
       return;
     }
-    earnPoints(points);
+    // No points earned when redeeming with rewards
+    if (method !== "rewards") earnPoints(points);
     setSuccess(true);
   };
 
@@ -55,7 +61,11 @@ function BuyBundlePage() {
         <h1 className="mt-4 text-xl font-semibold">Purchase complete</h1>
         <p className="mt-1 text-sm text-muted-foreground">{bundle.name} · {bundle.data}</p>
         <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
-          <Sparkles className="h-4 w-4" /> +{points} loyalty points earned
+          {method === "rewards" ? (
+            <><Gift className="h-4 w-4" /> Redeemed with {pointsNeeded} loyalty points</>
+          ) : (
+            <><Sparkles className="h-4 w-4" /> +{points} loyalty points earned</>
+          )}
         </div>
         <div className="mt-8 grid gap-2">
           <Link to="/app/my-bundles" className="rounded-2xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground">View my bundles</Link>
