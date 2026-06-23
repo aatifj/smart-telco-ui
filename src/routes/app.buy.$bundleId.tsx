@@ -61,7 +61,11 @@ function BuyBundlePage() {
         <h1 className="mt-4 text-xl font-semibold">Purchase complete</h1>
         <p className="mt-1 text-sm text-muted-foreground">{bundle.name} · {bundle.data}</p>
         <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
-          <Sparkles className="h-4 w-4" /> +{points} loyalty points earned
+          {method === "rewards" ? (
+            <><Gift className="h-4 w-4" /> Redeemed with {pointsNeeded} loyalty points</>
+          ) : (
+            <><Sparkles className="h-4 w-4" /> +{points} loyalty points earned</>
+          )}
         </div>
         <div className="mt-8 grid gap-2">
           <Link to="/app/my-bundles" className="rounded-2xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground">View my bundles</Link>
