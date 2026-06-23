@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { ArrowLeft, Wifi, Wallet, Smartphone, Coins, Check, AlertCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, Wifi, Wallet, Smartphone, Coins, Check, AlertCircle, Sparkles, Landmark, Gift } from "lucide-react";
 import { getBundle, loyaltyPointsFor } from "@/lib/catalog";
-import { useWallet, type PaymentMethod } from "@/store/wallet";
+import { useWallet, type PaymentMethod, POINTS_PER_ETB } from "@/store/wallet";
 
 export const Route = createFileRoute("/app/buy/$bundleId")({
   component: BuyBundlePage,
