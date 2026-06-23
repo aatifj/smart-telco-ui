@@ -34,6 +34,10 @@ function BuyBundlePage() {
     { key: "airtime", label: "Airtime", sub: `Balance ETB ${airtime.toFixed(2)}`, icon: Smartphone, enabled: airtime >= bundle.price, reason: "Top up airtime first" },
     { key: "mpesa", label: "M-PESA Wallet", sub: `Balance ETB ${mpesa.toFixed(2)}`, icon: Wallet, enabled: mpesa >= bundle.price, reason: "Insufficient M-PESA balance" },
     { key: "advance", label: "Airtime Advance", sub: `Available ETB ${advanceAvailable.toFixed(2)}`, icon: Coins, enabled: advanceAvailable >= bundle.price, reason: "Exceeds your advance limit" },
+    { key: "rewards", label: "Rewards Wallet", sub: `${pointsNeeded} pts · You have ${loyaltyPoints}`, icon: Gift, enabled: loyaltyPoints >= pointsNeeded, reason: `Need ${pointsNeeded} loyalty points` },
+    { key: "cbe", label: "CBE Bank", sub: `Acct balance ETB ${banks.cbe.toFixed(2)}`, icon: Landmark, enabled: banks.cbe >= bundle.price, reason: "Insufficient CBE balance" },
+    { key: "awash", label: "Awash Bank", sub: `Acct balance ETB ${banks.awash.toFixed(2)}`, icon: Landmark, enabled: banks.awash >= bundle.price, reason: "Insufficient Awash balance" },
+    { key: "dashen", label: "Dashen Bank", sub: `Acct balance ETB ${banks.dashen.toFixed(2)}`, icon: Landmark, enabled: banks.dashen >= bundle.price, reason: "Insufficient Dashen balance" },
   ];
 
   const handleConfirm = () => {
@@ -43,7 +47,8 @@ function BuyBundlePage() {
       setError(res.reason ?? "Payment failed");
       return;
     }
-    earnPoints(points);
+    // No points earned when redeeming with rewards
+    if (method !== "rewards") earnPoints(points);
     setSuccess(true);
   };
 
